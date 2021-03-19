@@ -7,6 +7,7 @@
 
 #import "SearchViewController.h"
 #import "SearchEntity.h"
+#import "SearchPresentationContract.h"
 
 @interface SearchViewController()
 @property (weak, nonatomic) IBOutlet UITextField *songTextField;
@@ -15,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingLyricsActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIStackView *previousSearchStackContainer;
 
-@property (nonatomic) SearchEntity * entity;
+@property (nonatomic) id<SearchEntityType> entity;
 @end
 
 @implementation SearchViewController
@@ -24,18 +25,58 @@
     self = [super initWithCoder:coder];
     if (self) {
         _entity = [[SearchEntity alloc] init];
+        [_entity setController:self];
     }
     return self;
 }
 
 - (IBAction)onGetLyricsButtonPressed:(UIButton *)sender {
-    
-}
-- (NSString *)getArtist { 
-    return nil;
+    [_entity onSearchButtonPressed];
 }
 
-- (NSString *)getSong { 
-    return nil;
+- (NSString *)getArtist {
+    return _artistTextField.text;
 }
+
+- (NSString *)getSong {
+    return _songTextField.text;
+}
+
+- (void)hideArtistError {
+    
+}
+
+
+- (void)hideSongError {
+    
+}
+
+
+- (void)setLoadingState {
+    
+}
+
+
+- (void)setSteadyState {
+    
+}
+
+
+- (void)showArtistError {
+    
+}
+
+
+- (void)showSongError {
+    
+}
+
+- (void)showError:(NSString *)message {
+    
+}
+
+- (void)navigateToReader:(Lyrics *)lyrics {
+    
+}
+
 @end

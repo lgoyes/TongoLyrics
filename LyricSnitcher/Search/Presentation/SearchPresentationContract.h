@@ -9,6 +9,7 @@
 #define SearchPresentationContract_h
 
 #import <Foundation/Foundation.h>
+#import "Lyrics.h"
 
 @protocol SearchControllerType <NSObject>
 - (NSString*) getSong;
@@ -17,10 +18,15 @@
 - (void) showSongError;
 - (void) hideArtistError;
 - (void) showArtistError;
+- (void) setLoadingState;
+- (void) setSteadyState;
+- (void) showError: (NSString*) message;
+- (void) navigateToReader: (Lyrics*) lyrics;
 @end
 
 @protocol SearchEntityType <NSObject>
 - (void) onSearchButtonPressed;
+- (void) setController: (id<SearchControllerType>) controller;
 @end
 
 #endif /* SearchPresentationContract_h */

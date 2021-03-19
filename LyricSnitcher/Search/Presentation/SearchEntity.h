@@ -17,6 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL) validateSongField;
 - (BOOL) validateArtistField;
 - (BOOL) validateForm;
+- (void) startLoadingUI;
+- (void) stopLoadingUI;
+- (void) searchLyrics;
+- (void) handleLyricsSearchError: (LyricsGetableError) error;
+- (void) handleLyricsSearchSuccess: (Lyrics*) response;
+- (NSString*) getErrorMessageFor: (LyricsGetableError) error;
 @end
 
 NS_ASSUME_NONNULL_END

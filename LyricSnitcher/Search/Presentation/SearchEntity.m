@@ -43,7 +43,46 @@
     return songValid && artistValid;
 }
 - (void) onSearchButtonPressed {
+    [self startLoadingUI];
     BOOL isValid = [self validateForm];
-    
+    if (isValid) {
+        [self searchLyrics];
+    } else {
+        [self stopLoadingUI];
+    }
+}
+- (void)startLoadingUI {
+    [_controller setLoadingState];
+}
+- (void)stopLoadingUI {
+    [_controller setSteadyState];
+}
+- (void)searchLyrics {
+    NSString * song = [_controller getSong];
+    NSString * artist = [_controller getArtist];
+    SearchEntity * __weak weakSelf = self;
+    [_getLyricsInteractor getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
+            [weakSelf handleLyricsSearchError:error];
+        } onSuccess:^(Lyrics *response) {
+            [weakSelf handleLyricsSearchSuccess:response];
+        }];
+}
+- (void)handleLyricsSearchError: (LyricsGetableError) error {
+    [self stopLoadingUI];
+    NSString * errorMessage = [self getErrorMessageFor:error];
+    [_controller showError:errorMessage];
+}
+- (void)handleLyricsSearchSuccess:(Lyrics *)response {
+    [self stopLoadingUI];
+    [_controller navigateToReader:response];
+}
+
+- (NSString *)getErrorMessageFor:(LyricsGetableError)error {
+    switch (error) {
+        case LyricsGetableErrorNoResult:
+            return @"No lyrics found";
+        case LyricsGetableErrorUnknown:
+            return @"Unknown error";
+    }
 }
 @end

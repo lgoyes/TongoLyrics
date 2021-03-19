@@ -14,10 +14,14 @@
 @end
 
 @implementation GetLyricsInteractor
-- (void)getLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError * _Nonnull))onError onSuccess:(void (^)(Lyrics * _Nonnull))onSuccess {
+- (void)getLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(LyricsGetableError))onError onSuccess:(void (^)(Lyrics * _Nonnull))onSuccess {
     [_networkRepository fetchLyricsForArtist:artist andSong:song onError:^(NSError *error) {
         if (onError != nil) {
-            onError(error);
+            if (error != nil && error.localizedDescription != nil && [error.localizedDescription isEqualToString:@"The request timed out."]) {
+                onError(LyricsGetableErrorNoResult);
+            } else {
+                onError(LyricsGetableErrorUnknown);
+            }
         }
     } onSuccess:^(Lyrics *response) {
         if (onSuccess != nil) {

@@ -11,8 +11,15 @@
 #import <Foundation/Foundation.h>
 #import "Lyrics.h"
 
+typedef enum {
+    LyricsGetableErrorNoResult = 0,
+    LyricsGetableErrorStart = LyricsGetableErrorNoResult,
+    LyricsGetableErrorUnknown = 1,
+    LyricsGetableErrorStop = LyricsGetableErrorUnknown
+} LyricsGetableError;
+
 @protocol LyricsGetable <NSObject>
-- (void) getLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (Lyrics* response)) onSuccess;
+- (void) getLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (LyricsGetableError error))onError onSuccess:(void (^) (Lyrics* response)) onSuccess;
 @end
 
 #endif /* LyricsGetable_h */

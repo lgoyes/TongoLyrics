@@ -31,7 +31,7 @@
         Lyrics * dummyLyrics = [[Lyrics alloc] init];
         onSuccess(dummyLyrics);
     } else if (!_fetchLyricsForArtistExpectedResultSuccess && onError != nil) {
-        NSError * error = [[NSError alloc]init];
+        NSError * error = [NSError errorWithDomain:NSURLErrorDomain code:-1001 userInfo:@{ @"NSLocalizedDescription": @"The request timed out."}];
         onError(error);
     }
 }
@@ -69,7 +69,7 @@
     NSString * song = @"dummy-song";
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"Any callback is correct"];
     GetLyricsInteractorTests * __weak weakSelf = self;
-    [_sut getLyricsForArtist:artist andSong:song onError:^(NSError * _Nonnull error) {
+    [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
         XCTAssertTrue(weakSelf.networkRepository.fetchLyricsForArtistWasCalled);
         [correctExpectation fulfill];
     } onSuccess:^(Lyrics * _Nonnull response) {
@@ -87,7 +87,7 @@
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is not correct"];
     failureExpectation.inverted = true;
     
-    [_sut getLyricsForArtist:artist andSong:song onError:^(NSError * _Nonnull error) {
+    [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
         [correctExpectation fulfill];
     } onSuccess:^(Lyrics * _Nonnull response) {
         [failureExpectation fulfill];
@@ -102,7 +102,7 @@
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is correct"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is not correct"];
     failureExpectation.inverted = true;
-    [_sut getLyricsForArtist:artist andSong:song onError:^(NSError * _Nonnull error) {
+    [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
         [failureExpectation fulfill];
     } onSuccess:^(Lyrics * _Nonnull response) {
         [correctExpectation fulfill];
