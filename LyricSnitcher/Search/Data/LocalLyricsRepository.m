@@ -10,7 +10,7 @@
 @implementation LocalLyricsRepository
 
 - (void)fetchLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError *))onError onSuccess:(void (^)(Lyrics *))onSuccess {
-    if (([artist isEqualToString:@"non-existing-artist"]) || ([song isEqualToString:@"non-existing-song"])) {
+    if (([artist isEqualToString:@"error"]) || ([song isEqualToString:@"error"])) {
         if (onError != nil) {
             NSError * error = [NSError errorWithDomain:NSURLErrorDomain code:-1001 userInfo:@{ @"NSLocalizedDescription": @"The request timed out."}];
             onError(error);
