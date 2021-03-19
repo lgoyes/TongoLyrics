@@ -29,6 +29,8 @@
 		0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBBCC02604F91200F9C06F /* SearchViewController.m */; };
 		0CCBBCCA2605006C00F9C06F /* SearchEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBBCC92605006C00F9C06F /* SearchEntity.m */; };
 		0CCBBCCF2605019900F9C06F /* SearchEntityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */; };
+		0CCCB5DC260563EB0065FF63 /* DBLocalStorageRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCCB5DB260563EB0065FF63 /* DBLocalStorageRepository.m */; };
+		0CCCB5EB2605642D0065FF63 /* SimpleLocalStorageRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCCB5EA2605642D0065FF63 /* SimpleLocalStorageRepository.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,11 @@
 		0CCBBCC92605006C00F9C06F /* SearchEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchEntity.m; sourceTree = "<group>"; };
 		0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchEntityTests.m; sourceTree = "<group>"; };
 		0CCBBCD3260502E100F9C06F /* SearchPresentationContract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchPresentationContract.h; sourceTree = "<group>"; };
+		0CCCB5DA260563EB0065FF63 /* DBLocalStorageRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBLocalStorageRepository.h; sourceTree = "<group>"; };
+		0CCCB5DB260563EB0065FF63 /* DBLocalStorageRepository.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBLocalStorageRepository.m; sourceTree = "<group>"; };
+		0CCCB5E92605642D0065FF63 /* SimpleLocalStorageRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleLocalStorageRepository.h; sourceTree = "<group>"; };
+		0CCCB5EA2605642D0065FF63 /* SimpleLocalStorageRepository.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleLocalStorageRepository.m; sourceTree = "<group>"; };
+		0CCCB5EF2605644D0065FF63 /* LocalStorageRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalStorageRepository.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,21 +148,16 @@
 		0C8255D92604054400FC742D /* LyricSnitcher */ = {
 			isa = PBXGroup;
 			children = (
+				0C8255EE2604054400FC742D /* Info.plist */,
+				0CCCB5F3260565360065FF63 /* SupportFiles */,
 				0C82561D260454E700FC742D /* Reader */,
 				0C82561C260454E000FC742D /* History */,
 				0C82561B260454D600FC742D /* Search */,
-				0C8255DA2604054400FC742D /* AppDelegate.h */,
-				0C8255DB2604054400FC742D /* AppDelegate.m */,
-				0C8255DD2604054400FC742D /* SceneDelegate.h */,
-				0C8255DE2604054400FC742D /* SceneDelegate.m */,
 				0C8255E32604054400FC742D /* Main.storyboard */,
 				0C8255E92604054400FC742D /* Assets.xcassets */,
 				0C8255EB2604054400FC742D /* LaunchScreen.storyboard */,
-				0C8255EE2604054400FC742D /* Info.plist */,
 				0C8255EF2604054400FC742D /* main.m */,
 				0C8255E62604054400FC742D /* LyricSnitcher.xcdatamodeld */,
-				0C7D3F0C2604EC500097701A /* SystemConfig.h */,
-				0C7D3F0D2604EC500097701A /* SystemConfig.m */,
 			);
 			path = LyricSnitcher;
 			sourceTree = "<group>";
@@ -205,8 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				0C8256262604552900FC742D /* Presentation */,
-				0C8256252604552600FC742D /* Domain */,
-				0C8256242604552100FC742D /* Data */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -252,6 +252,10 @@
 		0C8256212604551400FC742D /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0CCCB5DA260563EB0065FF63 /* DBLocalStorageRepository.h */,
+				0CCCB5DB260563EB0065FF63 /* DBLocalStorageRepository.m */,
+				0CCCB5E92605642D0065FF63 /* SimpleLocalStorageRepository.h */,
+				0CCCB5EA2605642D0065FF63 /* SimpleLocalStorageRepository.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -259,6 +263,7 @@
 		0C8256222604551700FC742D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				0CCCB5EF2605644D0065FF63 /* LocalStorageRepository.h */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -270,20 +275,6 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		0C8256242604552100FC742D /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		0C8256252604552600FC742D /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
 		0C8256262604552900FC742D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -292,6 +283,43 @@
 				0C61AC77260554E700834474 /* ReaderView.xib */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		0CCCB5F3260565360065FF63 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				0CCCB5F6260565550065FF63 /* SceneDelegate */,
+				0CCCB5F52605654B0065FF63 /* AppDelegate */,
+				0CCCB5F4260565410065FF63 /* SystemConfig */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		0CCCB5F4260565410065FF63 /* SystemConfig */ = {
+			isa = PBXGroup;
+			children = (
+				0C7D3F0C2604EC500097701A /* SystemConfig.h */,
+				0C7D3F0D2604EC500097701A /* SystemConfig.m */,
+			);
+			path = SystemConfig;
+			sourceTree = "<group>";
+		};
+		0CCCB5F52605654B0065FF63 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				0C8255DA2604054400FC742D /* AppDelegate.h */,
+				0C8255DB2604054400FC742D /* AppDelegate.m */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		0CCCB5F6260565550065FF63 /* SceneDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				0C8255DD2604054400FC742D /* SceneDelegate.h */,
+				0C8255DE2604054400FC742D /* SceneDelegate.m */,
+			);
+			path = SceneDelegate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,6 +455,7 @@
 				0C8256452604587900FC742D /* APILyrics.m in Sources */,
 				0C7D3F032604EAC30097701A /* GetLyricsInteractor.m in Sources */,
 				0C8255F02604054400FC742D /* main.m in Sources */,
+				0CCCB5EB2605642D0065FF63 /* SimpleLocalStorageRepository.m in Sources */,
 				0C825629260455E000FC742D /* RemoteLyricsRepository.m in Sources */,
 				0C61AC70260552A200834474 /* ReaderViewController.m in Sources */,
 				0C0746FB2604DEF400B7B985 /* LocalLyricsRepository.m in Sources */,
@@ -437,6 +466,7 @@
 				0C0747062604E35E00B7B985 /* Lyrics.m in Sources */,
 				0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */,
 				0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */,
+				0CCCB5DC260563EB0065FF63 /* DBLocalStorageRepository.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
