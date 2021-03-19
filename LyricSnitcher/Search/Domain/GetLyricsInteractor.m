@@ -9,6 +9,10 @@
 #import "RemoteLyricsRepository.h"
 #import "LocalLyricsRepository.h"
 
+@interface GetLyricsInteractor()
++ (id<LyricsRepositoryProtocol>) getRepositoryFor:(SystemConfigType) config;
+@end
+
 @implementation GetLyricsInteractor
 - (void)getLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError * _Nonnull))onError onSuccess:(void (^)(Lyrics * _Nonnull))onSuccess {
     [_networkRepository fetchLyricsForArtist:artist andSong:song onError:^(NSError *error) {
@@ -24,15 +28,25 @@
 - (instancetype) initWithSystemConfig:(SystemConfigType) systemConfig {
     self = [super init];
     if (self) {
-        switch (systemConfig) {
-            case SystemConfigTypeRelease:
-                _networkRepository = [[RemoteLyricsRepository alloc] init];
-                break;
-            case SystemConfigTypeDebug:
-                _networkRepository = [[LocalLyricsRepository alloc] init];
-                break;
-        }
+        _networkRepository = [GetLyricsInteractor getRepositoryFor:systemConfig];
     }
     return self;
+}
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        SystemConfigType systemConfig = [SystemConfig getCurrent];
+        _networkRepository = [GetLyricsInteractor getRepositoryFor:systemConfig];
+    }
+    return self;
+}
++(id<LyricsRepositoryProtocol>)getRepositoryFor:(SystemConfigType)config {
+    switch (config) {
+        case SystemConfigTypeRelease:
+            return [[RemoteLyricsRepository alloc] init];
+        case SystemConfigTypeDebug:
+            return [[LocalLyricsRepository alloc] init];
+    }
 }
 @end

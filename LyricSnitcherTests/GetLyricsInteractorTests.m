@@ -102,7 +102,6 @@
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is correct"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is not correct"];
     failureExpectation.inverted = true;
-    
     [_sut getLyricsForArtist:artist andSong:song onError:^(NSError * _Nonnull error) {
         [failureExpectation fulfill];
     } onSuccess:^(Lyrics * _Nonnull response) {
