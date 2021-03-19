@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SearchViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,6 +73,9 @@
                                                                 <state key="normal" title="Get Lyrics">
                                                                     <color key="titleColor" systemColor="labelColor"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="onGetLyricsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tau-vZ-qqc"/>
+                                                                </connections>
                                                             </button>
                                                             <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="8Y7-bO-7qK">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -136,6 +139,13 @@
                             <constraint firstItem="luF-bv-jlA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Wq3-M7-4Y3"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="artistTextField" destination="X7G-jc-3UH" id="olB-HS-TYc"/>
+                        <outlet property="getLyricsButton" destination="0gJ-6d-0VN" id="IhM-ue-h4X"/>
+                        <outlet property="loadingLyricsActivityIndicator" destination="8Y7-bO-7qK" id="Tgu-d8-dgi"/>
+                        <outlet property="previousSearchStackContainer" destination="zMZ-c0-2wk" id="yhl-vU-qkz"/>
+                        <outlet property="songTextField" destination="gM9-CM-Kqq" id="Zon-CD-7Lz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

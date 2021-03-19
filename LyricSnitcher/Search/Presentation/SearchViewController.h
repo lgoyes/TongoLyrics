@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchViewController : UIView
+@interface SearchViewController : UIViewController
 
 @end
 

@@ -15,7 +15,6 @@
 		0C7D3F0E2604EC500097701A /* SystemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7D3F0D2604EC500097701A /* SystemConfig.m */; };
 		0C8255DC2604054400FC742D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255DB2604054400FC742D /* AppDelegate.m */; };
 		0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255DE2604054400FC742D /* SceneDelegate.m */; };
-		0C8255E22604054400FC742D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255E12604054400FC742D /* ViewController.m */; };
 		0C8255E52604054400FC742D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C8255E32604054400FC742D /* Main.storyboard */; };
 		0C8255E82604054400FC742D /* LyricSnitcher.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255E62604054400FC742D /* LyricSnitcher.xcdatamodeld */; };
 		0C8255EA2604054400FC742D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8255E92604054400FC742D /* Assets.xcassets */; };
@@ -26,6 +25,8 @@
 		0C8256322604567B00FC742D /* RemoteLyricsRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8256312604567B00FC742D /* RemoteLyricsRepositoryTests.m */; };
 		0C8256452604587900FC742D /* APILyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8256442604587900FC742D /* APILyrics.m */; };
 		0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBBCC02604F91200F9C06F /* SearchViewController.m */; };
+		0CCBBCCA2605006C00F9C06F /* SearchEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBBCC92605006C00F9C06F /* SearchEntity.m */; };
+		0CCBBCCF2605019900F9C06F /* SearchEntityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +62,6 @@
 		0C8255DB2604054400FC742D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0C8255DD2604054400FC742D /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		0C8255DE2604054400FC742D /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		0C8255E02604054400FC742D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		0C8255E12604054400FC742D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0C8255E42604054400FC742D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0C8255E72604054400FC742D /* LyricSnitcher.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LyricSnitcher.xcdatamodel; sourceTree = "<group>"; };
 		0C8255E92604054400FC742D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +81,9 @@
 		0C8256442604587900FC742D /* APILyrics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APILyrics.m; sourceTree = "<group>"; };
 		0CCBBCBF2604F91200F9C06F /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		0CCBBCC02604F91200F9C06F /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		0CCBBCC82605006C00F9C06F /* SearchEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchEntity.h; sourceTree = "<group>"; };
+		0CCBBCC92605006C00F9C06F /* SearchEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchEntity.m; sourceTree = "<group>"; };
+		0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchEntityTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,8 +141,6 @@
 				0C8255DB2604054400FC742D /* AppDelegate.m */,
 				0C8255DD2604054400FC742D /* SceneDelegate.h */,
 				0C8255DE2604054400FC742D /* SceneDelegate.m */,
-				0C8255E02604054400FC742D /* ViewController.h */,
-				0C8255E12604054400FC742D /* ViewController.m */,
 				0C8255E32604054400FC742D /* Main.storyboard */,
 				0C8255E92604054400FC742D /* Assets.xcassets */,
 				0C8255EB2604054400FC742D /* LaunchScreen.storyboard */,
@@ -160,6 +160,7 @@
 				0C8256312604567B00FC742D /* RemoteLyricsRepositoryTests.m */,
 				0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */,
 				0C7D3F072604EBB60097701A /* GetLyricsInteractorTests.m */,
+				0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */,
 			);
 			path = LyricSnitcherTests;
 			sourceTree = "<group>";
@@ -208,6 +209,8 @@
 			children = (
 				0CCBBCBF2604F91200F9C06F /* SearchViewController.h */,
 				0CCBBCC02604F91200F9C06F /* SearchViewController.m */,
+				0CCBBCC82605006C00F9C06F /* SearchEntity.h */,
+				0CCBBCC92605006C00F9C06F /* SearchEntity.m */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -413,10 +416,10 @@
 				0C8255F02604054400FC742D /* main.m in Sources */,
 				0C825629260455E000FC742D /* RemoteLyricsRepository.m in Sources */,
 				0C0746FB2604DEF400B7B985 /* LocalLyricsRepository.m in Sources */,
-				0C8255E22604054400FC742D /* ViewController.m in Sources */,
 				0C8255E82604054400FC742D /* LyricSnitcher.xcdatamodeld in Sources */,
 				0C8255DC2604054400FC742D /* AppDelegate.m in Sources */,
 				0C7D3F0E2604EC500097701A /* SystemConfig.m in Sources */,
+				0CCBBCCA2605006C00F9C06F /* SearchEntity.m in Sources */,
 				0C0747062604E35E00B7B985 /* Lyrics.m in Sources */,
 				0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */,
 				0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */,
@@ -427,6 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CCBBCCF2605019900F9C06F /* SearchEntityTests.m in Sources */,
 				0C8256322604567B00FC742D /* RemoteLyricsRepositoryTests.m in Sources */,
 				0C0747002604DF8400B7B985 /* LocalLyricsRepositoryTests.m in Sources */,
 				0C7D3F082604EBB60097701A /* GetLyricsInteractorTests.m in Sources */,
