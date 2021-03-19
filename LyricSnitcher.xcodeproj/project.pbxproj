@@ -84,6 +84,7 @@
 		0CCBBCC82605006C00F9C06F /* SearchEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchEntity.h; sourceTree = "<group>"; };
 		0CCBBCC92605006C00F9C06F /* SearchEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchEntity.m; sourceTree = "<group>"; };
 		0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchEntityTests.m; sourceTree = "<group>"; };
+		0CCBBCD3260502E100F9C06F /* SearchPresentationContract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchPresentationContract.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +212,7 @@
 				0CCBBCC02604F91200F9C06F /* SearchViewController.m */,
 				0CCBBCC82605006C00F9C06F /* SearchEntity.h */,
 				0CCBBCC92605006C00F9C06F /* SearchEntity.m */,
+				0CCBBCD3260502E100F9C06F /* SearchPresentationContract.h */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";

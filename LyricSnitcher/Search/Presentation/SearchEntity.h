@@ -6,15 +6,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SearchPresentationContract.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol SearchEntityType <NSObject>
-
-@end
-
 @interface SearchEntity : NSObject <SearchEntityType>
-
+@property (weak, nonatomic) id<SearchControllerType> controller;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -8,5 +8,4 @@
 #import "SearchEntity.h"
 
 @implementation SearchEntity
-
 @end

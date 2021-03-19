@@ -6,10 +6,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SearchPresentationContract.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchViewController : UIViewController
+@interface SearchViewController : UIViewController <SearchControllerType>
 
 @end
 
