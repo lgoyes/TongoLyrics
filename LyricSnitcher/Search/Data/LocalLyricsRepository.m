@@ -18,7 +18,7 @@
         }
     } else {
         if (onSuccess != nil) {
-            NSString * lyrics = [NSString stringWithFormat:@"These are the lyrics for %@, written by %@", song, artist];
+            NSString * lyrics = [NSString stringWithFormat:@"These are the lyrics for %@, written by %@.\nThis might be some extremely long lyrics, but they are not.\nThey are barely as long as this view, but due to my lack of creativity, I'm force to write some text.\n\nThis might be some extremely long lyrics, but they are not.\nThey are barely as long as this view, but due to my lack of creativity, I'm force to write some text.\n\nThis might be some extremely long lyrics, but they are not.\nThey are barely as long as this view, but due to my lack of creativity, I'm force to write some text.\n\nThis might be some extremely long lyrics, but they are not.\nThey are barely as long as this view, but due to my lack of creativity, I'm force to write some text.\n\n", song, artist];
             NSDate * date = [NSDate now];
             Lyrics * response = [[Lyrics alloc] initWithLyrics:lyrics artist:artist song:song andDate:date];
             onSuccess(response);
