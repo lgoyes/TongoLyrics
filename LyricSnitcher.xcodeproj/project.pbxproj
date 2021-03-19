@@ -136,7 +136,7 @@
 		0C8255D92604054400FC742D /* LyricSnitcher */ = {
 			isa = PBXGroup;
 			children = (
-				0C82561D260454E700FC742D /* LyricsReader */,
+				0C82561D260454E700FC742D /* Reader */,
 				0C82561C260454E000FC742D /* History */,
 				0C82561B260454D600FC742D /* Search */,
 				0C8255DA2604054400FC742D /* AppDelegate.h */,
@@ -196,14 +196,14 @@
 			path = History;
 			sourceTree = "<group>";
 		};
-		0C82561D260454E700FC742D /* LyricsReader */ = {
+		0C82561D260454E700FC742D /* Reader */ = {
 			isa = PBXGroup;
 			children = (
 				0C8256262604552900FC742D /* Presentation */,
 				0C8256252604552600FC742D /* Domain */,
 				0C8256242604552100FC742D /* Data */,
 			);
-			path = LyricsReader;
+			path = Reader;
 			sourceTree = "<group>";
 		};
 		0C82561E2604550400FC742D /* Presentation */ = {
