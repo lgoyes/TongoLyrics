@@ -1,0 +1,17 @@
+//
+//  LyricsRepositoryProtocol.h
+//  LyricSnitcher
+//
+//  Created by Luis Goyes Garces on 18/03/21.
+//
+
+#ifndef LyricsRepositoryProtocol_h
+#define LyricsRepositoryProtocol_h
+
+#import "APILyrics.h"
+
+@protocol LyricsRepositoryProtocol
+- (void) fetchLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (APILyrics* response)) onSuccess;
+@end
+
+#endif /* LyricsRepositoryProtocol_h */
