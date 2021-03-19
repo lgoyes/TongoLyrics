@@ -11,6 +11,8 @@
 #import "RemoteLyricsRepository.h"
 #import "LyricsRepositoryProtocol.h"
 
+#pragma mark - FakeNetworkRepository
+
 @interface FakeNetworkRepository : NSObject <LyricsRepositoryProtocol>
 @property (nonatomic) bool fetchLyricsForArtistWasCalled;
 @property (nonatomic) bool fetchLyricsForArtistExpectedResultSuccess;
@@ -36,6 +38,8 @@
     }
 }
 @end
+
+#pragma mark - GetLyricsInteractorTests
 
 @interface GetLyricsInteractorTests : XCTestCase
 @property GetLyricsInteractor* sut;

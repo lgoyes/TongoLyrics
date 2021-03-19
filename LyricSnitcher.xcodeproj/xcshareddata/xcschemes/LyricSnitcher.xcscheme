@@ -43,7 +43,13 @@
                   Identifier = "RemoteLyricsRepositoryTests/test_GivenNOTValidArtistAndValidSong_WhenFetchLyricsForArtistAndSongIsCalled_ThenCallOnErrorBlock">
                </Test>
                <Test
+                  Identifier = "RemoteLyricsRepositoryTests/test_GivenNOTValidArtistAndValidSong_WhenPrivateFetchLyricsForArtistAndSongIsCalled_ThenCallOnErrorBlock">
+               </Test>
+               <Test
                   Identifier = "RemoteLyricsRepositoryTests/test_GivenValidArtistAndSong_WhenFetchLyricsForArtistAndSongIsCalled_ThenCallOnSuccessBlock">
+               </Test>
+               <Test
+                  Identifier = "RemoteLyricsRepositoryTests/test_GivenValidArtistAndSong_WhenPrivateFetchLyricsForArtistAndSongIsCalled_ThenCallOnSuccessBlock">
                </Test>
             </SkippedTests>
          </TestableReference>

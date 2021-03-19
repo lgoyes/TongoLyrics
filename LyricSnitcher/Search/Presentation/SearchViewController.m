@@ -8,6 +8,7 @@
 #import "SearchViewController.h"
 #import "SearchEntity.h"
 #import "SearchPresentationContract.h"
+#import "ReaderViewController.h"
 
 @interface SearchViewController()
 @property (weak, nonatomic) IBOutlet UITextField *songTextField;
@@ -81,7 +82,8 @@
 }
 
 - (void)navigateToReader:(Lyrics *)lyrics {
-    
+    ReaderViewController * viewController = [ReaderViewController getInstanceWith:lyrics];
+    [self presentViewController:viewController animated:true completion:nil];
 }
 
 @end

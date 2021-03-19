@@ -9,6 +9,8 @@
 #import "SearchEntity.h"
 #import "GetLyricsInteractor.h"
 
+#pragma mark - SeamSearchEntity
+
 @interface SeamSearchEntity: SearchEntity
 @property (nonatomic) BOOL validateFormWasCalled;
 @property (nonatomic) BOOL startLoadingUIWasCalled;
@@ -49,6 +51,7 @@
 }
 @end
 
+#pragma mark - FakeFetchInteractor
 
 @interface FakeFetchInteractor : NSObject <LyricsGetable>
 @property (nonatomic) bool getLyricsForArtistExpectedResultSuccess;
@@ -65,6 +68,8 @@
     }
 }
 @end
+
+#pragma mark - FakeSearchController
 
 @interface FakeSearchController : NSObject <SearchControllerType>
 @property (nonatomic) bool getSongWasCalled;
@@ -141,6 +146,7 @@
 
 @end
 
+#pragma mark - SearchEntityTests
 
 @interface SearchEntityTests : XCTestCase
 @property (nonatomic) SearchEntity * sut;
