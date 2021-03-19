@@ -14,7 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RemoteLyricsRepository : NSObject <LyricsRepositoryProtocol>
 - (NSString*) formatStringURLForArtist: (NSString*) artist andSong:(NSString*) song;
 - (NSURL*) getURLForArtist: (NSString*) artist andSong:(NSString*) song;
-- (void) fetchLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (APILyrics* response)) onSuccess;
+- (void) _fetchLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (APILyrics* response)) onSuccess;
+- (Lyrics*) mapAPIResponse: (APILyrics*) response withArtist:(NSString*) artist song: (NSString*) song andDate: (NSDate*) date;
 @end
 
 NS_ASSUME_NONNULL_END

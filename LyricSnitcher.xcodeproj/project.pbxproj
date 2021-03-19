@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C0746FB2604DEF400B7B985 /* LocalLyricsRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0746FA2604DEF400B7B985 /* LocalLyricsRepository.m */; };
 		0C0747002604DF8400B7B985 /* LocalLyricsRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */; };
+		0C0747062604E35E00B7B985 /* Lyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0747052604E35E00B7B985 /* Lyrics.m */; };
 		0C8255DC2604054400FC742D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255DB2604054400FC742D /* AppDelegate.m */; };
 		0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255DE2604054400FC742D /* SceneDelegate.m */; };
 		0C8255E22604054400FC742D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255E12604054400FC742D /* ViewController.m */; };
@@ -44,6 +45,8 @@
 		0C0746F92604DEF400B7B985 /* LocalLyricsRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalLyricsRepository.h; sourceTree = "<group>"; };
 		0C0746FA2604DEF400B7B985 /* LocalLyricsRepository.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalLyricsRepository.m; sourceTree = "<group>"; };
 		0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalLyricsRepositoryTests.m; sourceTree = "<group>"; };
+		0C0747042604E35E00B7B985 /* Lyrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lyrics.h; sourceTree = "<group>"; };
+		0C0747052604E35E00B7B985 /* Lyrics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lyrics.m; sourceTree = "<group>"; };
 		0C8255D72604054400FC742D /* LyricSnitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricSnitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8255DA2604054400FC742D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0C8255DB2604054400FC742D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				0C82563F2604579900FC742D /* LyricsRepositoryProtocol.h */,
+				0C0747042604E35E00B7B985 /* Lyrics.h */,
+				0C0747052604E35E00B7B985 /* Lyrics.m */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -392,6 +397,7 @@
 				0C8255E22604054400FC742D /* ViewController.m in Sources */,
 				0C8255E82604054400FC742D /* LyricSnitcher.xcdatamodeld in Sources */,
 				0C8255DC2604054400FC742D /* AppDelegate.m in Sources */,
+				0C0747062604E35E00B7B985 /* Lyrics.m in Sources */,
 				0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

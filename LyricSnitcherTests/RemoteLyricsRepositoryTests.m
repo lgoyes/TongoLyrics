@@ -57,14 +57,14 @@
 }
 
 // This test might take too long to run. Disable it during TDD
-- (void) test_GivenValidArtistAndSong_WhenFetchLyricsForArtistAndSongIsCalled_ThenCallOnSuccessBlock {
+- (void) test_GivenValidArtistAndSong_WhenPrivateFetchLyricsForArtistAndSongIsCalled_ThenCallOnSuccessBlock {
     NSString * artist = @"Coldplay";
     NSString * song = @"Adventure of a Lifetime";
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess was called"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError should not be called"];
     failureExpectation.inverted = true;
     
-    [_sut fetchLyricsForArtist: artist
+    [_sut _fetchLyricsForArtist: artist
                        andSong: song
                        onError: ^(NSError * error) {
         [failureExpectation fulfill];
@@ -77,14 +77,14 @@
 }
 
 // This test might take too long to run. Disable it during TDD
-- (void) test_GivenNOTValidArtistAndValidSong_WhenFetchLyricsForArtistAndSongIsCalled_ThenCallOnErrorBlock {
+- (void) test_GivenNOTValidArtistAndValidSong_WhenPrivateFetchLyricsForArtistAndSongIsCalled_ThenCallOnErrorBlock {
     NSString * artist = @"asdfasdf";
     NSString * song = @"Adventure of a Lifetime";
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError was called"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess should not be called"];
     failureExpectation.inverted = true;
     
-    [_sut fetchLyricsForArtist: artist
+    [_sut _fetchLyricsForArtist: artist
                        andSong: song
                        onError: ^(NSError * error) {
         XCTAssertTrue([[error localizedDescription]isEqualToString:@"The request timed out."]);
@@ -95,5 +95,18 @@
     }];
     
     [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:20];
+}
+-(void) test_WhenMapAPIResponseIsCalled_ThenMapProperties {
+    NSString * artist = @"dummy-artist";
+    NSString * song = @"dummy-song";
+    NSString * lyrics = @"dummy-lyrics";
+    NSDate * date = [NSDate now];
+    APILyrics * apiResponse = [[APILyrics alloc] initWithLyrics:lyrics];
+    
+    Lyrics * mappedResponse = [_sut mapAPIResponse:apiResponse withArtist:artist song:song andDate:date];
+    XCTAssertEqual(mappedResponse.artist, artist);
+    XCTAssertEqual(mappedResponse.song, song);
+    XCTAssertEqual(mappedResponse.lyrics, lyrics);
+    XCTAssertEqual(mappedResponse.date, date);
 }
 @end

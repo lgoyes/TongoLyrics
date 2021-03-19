@@ -7,7 +7,7 @@
 
 #import <XCTest/XCTest.h>
 #import "LocalLyricsRepository.h"
-#import "APILyrics.h"
+#import "Lyrics.h"
 
 @interface LocalLyricsRepositoryTests : XCTestCase
 @property LocalLyricsRepository* sut;
@@ -37,7 +37,7 @@
                        onError: ^(NSError * error) {
         [failureExpectation fulfill];
     }
-                     onSuccess: ^(APILyrics* response) {
+                     onSuccess: ^(Lyrics* response) {
         [correctExpectation fulfill];
     }];
     
@@ -58,7 +58,7 @@
         XCTAssertTrue([[error localizedDescription]isEqualToString:@"The request timed out."]);
         [correctExpectation fulfill];
     }
-                     onSuccess: ^(APILyrics* response) {
+                     onSuccess: ^(Lyrics* response) {
         [failureExpectation fulfill];
     }];
     

@@ -30,7 +30,7 @@
     NSURL * url = [NSURL URLWithString:fullEndpoint];
     return url;
 }
-- (void)fetchLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError * _Nonnull))onError onSuccess:(void (^)(APILyrics * _Nonnull))onSuccess {
+- (void)_fetchLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError * _Nonnull))onError onSuccess:(void (^)(APILyrics * _Nonnull))onSuccess {
     NSURL * url = [self getURLForArtist:artist andSong:song];
     NSURLSessionConfiguration * configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.timeoutIntervalForRequest = 10;
@@ -60,4 +60,20 @@
     }];
     [dataTask resume];
 }
+
+- (void)fetchLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError *))onError onSuccess:(void (^)(Lyrics *))onSuccess {
+    [self _fetchLyricsForArtist:artist andSong:song onError:^(NSError * _Nonnull error) {
+        onError(error);
+    } onSuccess:^(APILyrics * _Nonnull response) {
+        NSDate * now = [NSDate now];
+        Lyrics * mappedResponse = [self mapAPIResponse:response withArtist:artist song:song andDate:now];
+        onSuccess(mappedResponse);
+    }];
+}
+
+- (Lyrics *)mapAPIResponse:(APILyrics *)response withArtist:(NSString *)artist song:(NSString *)song andDate:(NSDate *)date {
+    Lyrics * mappedResponse = [[Lyrics alloc] initWithLyrics:response.lyrics artist:artist song:song andDate:date];
+    return mappedResponse;
+}
+
 @end

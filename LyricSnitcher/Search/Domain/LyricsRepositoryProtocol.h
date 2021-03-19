@@ -8,10 +8,10 @@
 #ifndef LyricsRepositoryProtocol_h
 #define LyricsRepositoryProtocol_h
 
-#import "APILyrics.h"
+#import "Lyrics.h"
 
 @protocol LyricsRepositoryProtocol
-- (void) fetchLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (APILyrics* response)) onSuccess;
+- (void) fetchLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (Lyrics* response)) onSuccess;
 @end
 
 #endif /* LyricsRepositoryProtocol_h */
