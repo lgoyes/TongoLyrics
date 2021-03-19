@@ -44,7 +44,6 @@
     [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
 }
 
-// This test might take too long to run. Disable it during TDD
 - (void) test_GivenNOTValidArtistAndValidSong_WhenFetchLyricsForArtistAndSongIsCalled_ThenCallOnErrorBlock {
     NSString * artist = @"non-existing-artist";
     NSString * song = @"Adventure of a Lifetime";

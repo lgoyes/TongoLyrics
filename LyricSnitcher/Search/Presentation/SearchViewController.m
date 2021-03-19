@@ -27,7 +27,15 @@
     }
     return self;
 }
+
 - (IBAction)onGetLyricsButtonPressed:(UIButton *)sender {
     
+}
+- (NSString *)getArtist { 
+    return nil;
+}
+
+- (NSString *)getSong { 
+    return nil;
 }
 @end

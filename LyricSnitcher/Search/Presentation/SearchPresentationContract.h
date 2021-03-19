@@ -11,9 +11,16 @@
 #import <Foundation/Foundation.h>
 
 @protocol SearchControllerType <NSObject>
+- (NSString*) getSong;
+- (NSString*) getArtist;
+- (void) hideSongError;
+- (void) showSongError;
+- (void) hideArtistError;
+- (void) showArtistError;
 @end
 
 @protocol SearchEntityType <NSObject>
+- (void) onSearchButtonPressed;
 @end
 
 #endif /* SearchPresentationContract_h */

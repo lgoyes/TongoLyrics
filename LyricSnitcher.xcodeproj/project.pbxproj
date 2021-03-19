@@ -52,6 +52,7 @@
 		0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalLyricsRepositoryTests.m; sourceTree = "<group>"; };
 		0C0747042604E35E00B7B985 /* Lyrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lyrics.h; sourceTree = "<group>"; };
 		0C0747052604E35E00B7B985 /* Lyrics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lyrics.m; sourceTree = "<group>"; };
+		0C4B533726050E2100777111 /* LyricsGetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsGetable.h; sourceTree = "<group>"; };
 		0C7D3F012604EAC30097701A /* GetLyricsInteractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetLyricsInteractor.h; sourceTree = "<group>"; };
 		0C7D3F022604EAC30097701A /* GetLyricsInteractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetLyricsInteractor.m; sourceTree = "<group>"; };
 		0C7D3F072604EBB60097701A /* GetLyricsInteractorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetLyricsInteractorTests.m; sourceTree = "<group>"; };
@@ -225,6 +226,7 @@
 				0C0747052604E35E00B7B985 /* Lyrics.m */,
 				0C7D3F012604EAC30097701A /* GetLyricsInteractor.h */,
 				0C7D3F022604EAC30097701A /* GetLyricsInteractor.m */,
+				0C4B533726050E2100777111 /* LyricsGetable.h */,
 			);
 			path = Domain;
 			sourceTree = "<group>";

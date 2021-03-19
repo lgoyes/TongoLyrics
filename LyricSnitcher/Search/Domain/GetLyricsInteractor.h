@@ -8,12 +8,12 @@
 #import <Foundation/Foundation.h>
 #import "LyricsRepositoryProtocol.h"
 #import "SystemConfig.h"
+#import "LyricsGetable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GetLyricsInteractor : NSObject
+@interface GetLyricsInteractor : NSObject <LyricsGetable>
 @property (nonatomic) id<LyricsRepositoryProtocol> networkRepository;
-- (void) getLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (Lyrics* response)) onSuccess;
 - (instancetype) initWithSystemConfig:(SystemConfigType) systemConfig;
 @end
 
