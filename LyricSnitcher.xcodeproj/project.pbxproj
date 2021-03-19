@@ -25,6 +25,7 @@
 		0C825629260455E000FC742D /* RemoteLyricsRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C825628260455E000FC742D /* RemoteLyricsRepository.m */; };
 		0C8256322604567B00FC742D /* RemoteLyricsRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8256312604567B00FC742D /* RemoteLyricsRepositoryTests.m */; };
 		0C8256452604587900FC742D /* APILyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8256442604587900FC742D /* APILyrics.m */; };
+		0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBBCC02604F91200F9C06F /* SearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		0C82563F2604579900FC742D /* LyricsRepositoryProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsRepositoryProtocol.h; sourceTree = "<group>"; };
 		0C8256432604587900FC742D /* APILyrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APILyrics.h; sourceTree = "<group>"; };
 		0C8256442604587900FC742D /* APILyrics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APILyrics.m; sourceTree = "<group>"; };
+		0CCBBCBF2604F91200F9C06F /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		0CCBBCC02604F91200F9C06F /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +206,8 @@
 		0C82561E2604550400FC742D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				0CCBBCBF2604F91200F9C06F /* SearchViewController.h */,
+				0CCBBCC02604F91200F9C06F /* SearchViewController.m */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -413,6 +418,7 @@
 				0C8255DC2604054400FC742D /* AppDelegate.m in Sources */,
 				0C7D3F0E2604EC500097701A /* SystemConfig.m in Sources */,
 				0C0747062604E35E00B7B985 /* Lyrics.m in Sources */,
+				0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */,
 				0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
