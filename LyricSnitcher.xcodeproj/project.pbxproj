@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C0746FB2604DEF400B7B985 /* LocalLyricsRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0746FA2604DEF400B7B985 /* LocalLyricsRepository.m */; };
+		0C0747002604DF8400B7B985 /* LocalLyricsRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */; };
 		0C8255DC2604054400FC742D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255DB2604054400FC742D /* AppDelegate.m */; };
 		0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255DE2604054400FC742D /* SceneDelegate.m */; };
 		0C8255E22604054400FC742D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8255E12604054400FC742D /* ViewController.m */; };
@@ -39,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C0746F92604DEF400B7B985 /* LocalLyricsRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalLyricsRepository.h; sourceTree = "<group>"; };
+		0C0746FA2604DEF400B7B985 /* LocalLyricsRepository.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalLyricsRepository.m; sourceTree = "<group>"; };
+		0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalLyricsRepositoryTests.m; sourceTree = "<group>"; };
 		0C8255D72604054400FC742D /* LyricSnitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricSnitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8255DA2604054400FC742D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0C8255DB2604054400FC742D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -137,6 +142,7 @@
 			children = (
 				0C8255FB2604054400FC742D /* Info.plist */,
 				0C8256312604567B00FC742D /* RemoteLyricsRepositoryTests.m */,
+				0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */,
 			);
 			path = LyricSnitcherTests;
 			sourceTree = "<group>";
@@ -202,6 +208,8 @@
 				0C825628260455E000FC742D /* RemoteLyricsRepository.m */,
 				0C8256432604587900FC742D /* APILyrics.h */,
 				0C8256442604587900FC742D /* APILyrics.m */,
+				0C0746F92604DEF400B7B985 /* LocalLyricsRepository.h */,
+				0C0746FA2604DEF400B7B985 /* LocalLyricsRepository.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -380,6 +388,7 @@
 				0C8256452604587900FC742D /* APILyrics.m in Sources */,
 				0C8255F02604054400FC742D /* main.m in Sources */,
 				0C825629260455E000FC742D /* RemoteLyricsRepository.m in Sources */,
+				0C0746FB2604DEF400B7B985 /* LocalLyricsRepository.m in Sources */,
 				0C8255E22604054400FC742D /* ViewController.m in Sources */,
 				0C8255E82604054400FC742D /* LyricSnitcher.xcdatamodeld in Sources */,
 				0C8255DC2604054400FC742D /* AppDelegate.m in Sources */,
@@ -392,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C8256322604567B00FC742D /* RemoteLyricsRepositoryTests.m in Sources */,
+				0C0747002604DF8400B7B985 /* LocalLyricsRepositoryTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
