@@ -10,7 +10,7 @@
 
 #import "Lyrics.h"
 
-@protocol LyricsRepositoryProtocol
+@protocol LyricsRepositoryProtocol <NSObject>
 - (void) fetchLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (Lyrics* response)) onSuccess;
 @end
 
