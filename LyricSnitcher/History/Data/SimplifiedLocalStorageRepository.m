@@ -50,7 +50,7 @@
 }
 
 - (void)list:(void (^)(NSArray *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    onSuccess(_entries);
+    onSuccess([_entries copy]);
 }
 
 - (void)readBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
