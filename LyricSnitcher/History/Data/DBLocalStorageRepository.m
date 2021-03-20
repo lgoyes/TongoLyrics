@@ -37,9 +37,7 @@
 }
 
 - (void)deleteBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DBLyrics" inManagedObjectContext:_context];
-    [request setEntity:entity];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"song == %@ && artist == %@", song, artist];
     [request setPredicate:predicate];
     
@@ -56,9 +54,8 @@
 }
 
 - (void)list:(void (^)(NSArray *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DBLyrics" inManagedObjectContext:_context];
-    [request setEntity:entity];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
+    
     NSError *error = nil;
     NSArray *array = [_context executeFetchRequest:request error:&error];
     if (error == nil) {
@@ -70,9 +67,8 @@
 }
 
 - (void)readBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(Lyrics*))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DBLyrics" inManagedObjectContext:_context];
-    [request setEntity:entity];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
+
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"song == %@ && artist == %@", song, artist];
     [request setPredicate:predicate];
     
@@ -89,9 +85,8 @@
 }
 
 - (void)updateBySong:(NSString *)song andArtist:(NSString *)artist item:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DBLyrics" inManagedObjectContext:_context];
-    [request setEntity:entity];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
+
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"song == %@ && artist == %@", song, artist];
     [request setPredicate:predicate];
     
