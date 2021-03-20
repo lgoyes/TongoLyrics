@@ -252,6 +252,7 @@
 		0C8256212604551400FC742D /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0CCCB609260577630065FF63 /* Models */,
 				0CCCB5DA260563EB0065FF63 /* DBLocalStorageRepository.h */,
 				0CCCB5DB260563EB0065FF63 /* DBLocalStorageRepository.m */,
 				0CCCB5E92605642D0065FF63 /* SimpleLocalStorageRepository.h */,
@@ -320,6 +321,21 @@
 				0C8255DE2604054400FC742D /* SceneDelegate.m */,
 			);
 			path = SceneDelegate;
+			sourceTree = "<group>";
+		};
+		0CCCB609260577630065FF63 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0CCCB60A2605776B0065FF63 /* DBLyrics */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0CCCB60A2605776B0065FF63 /* DBLyrics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DBLyrics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
