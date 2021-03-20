@@ -45,7 +45,7 @@
 }
 
 - (void) test_GivenNOTValidArtistAndValidSong_WhenFetchLyricsForArtistAndSongIsCalled_ThenCallOnErrorBlock {
-    NSString * artist = @"non-existing-artist";
+    NSString * artist = @"error";
     NSString * song = @"Adventure of a Lifetime";
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError was called"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess should not be called"];

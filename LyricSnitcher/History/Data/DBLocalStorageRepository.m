@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "DBLocalStorageRepository.h"
 #import "AppDelegate.h"
+#import "DBLyrics+CoreDataClass.h"
 
 @implementation DBLocalStorageRepository
 - (instancetype)init
@@ -20,8 +21,15 @@
     return self;
 }
 - (void)create:(Lyrics *)item {
-    NSManagedObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"DBLyrics" inManagedObjectContext:_context];
-    
+    DBLyrics * dbLyrics = (DBLyrics *)[NSEntityDescription insertNewObjectForEntityForName:@"DBLyrics" inManagedObjectContext:_context];
+    dbLyrics.artist = item.artist;
+    dbLyrics.song = item.song;
+    dbLyrics.lyrics = item.lyrics;
+    dbLyrics.date = item.date;
+    NSError * error;
+    if (![_context save:&error]) {
+        NSLog(@"Failed to save - error: %@", [error localizedDescription]);
+    }
 }
 
 - (void)deleteBySong:(NSString *)song andArtist:(NSString *)artist {
