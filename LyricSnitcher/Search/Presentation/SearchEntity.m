@@ -80,9 +80,11 @@
 - (NSString *)getErrorMessageFor:(LyricsGetableError)error {
     switch (error) {
         case LyricsGetableErrorNoResult:
-            return @"No lyrics found";
+            return @"No lyrics found.";
         case LyricsGetableErrorUnknown:
-            return @"Unknown error";
+            return @"Unknown error.";
+        case LyricsGetableErrorUnableToStoreInDB:
+            return @"There is an error with the history. Please re-install the app.";
     }
 }
 @end

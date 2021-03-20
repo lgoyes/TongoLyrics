@@ -14,7 +14,8 @@
 typedef enum {
     LyricsGetableErrorNoResult = 0,
     LyricsGetableErrorStart = LyricsGetableErrorNoResult,
-    LyricsGetableErrorUnknown = 1,
+    LyricsGetableErrorUnableToStoreInDB = 1,
+    LyricsGetableErrorUnknown = 2,
     LyricsGetableErrorStop = LyricsGetableErrorUnknown
 } LyricsGetableError;
 

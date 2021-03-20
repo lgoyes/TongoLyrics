@@ -34,6 +34,7 @@
 
 - (void)create:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
     if (_createShouldSucceed) {
+        [_entries addObject:item];
         onSuccess();
     } else {
         onError(LocalStorageRepositoryErrorCreate);
@@ -161,7 +162,7 @@
     NSString * artist = @"dummy-artist";
     NSString * song = @"dummy-song";
     _networkRepository.fetchLyricsForArtistExpectedResultSuccess = true;
-    
+    _localStorageRepository.createShouldSucceed = true;
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is correct"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is not correct"];
     failureExpectation.inverted = true;
@@ -172,19 +173,49 @@
     }];
     [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
 }
-//- (void) test_GivenOnSuccessResponseFromTheNetworkRepository_WhenGetLyricsForArtistAndSong_ThenCallCreateEntryOnLocalStorageRepository {
-//    NSString * artist = @"dummy-artist";
-//    NSString * song = @"dummy-song";
-//
-//    XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is correct"];
-//    XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is not correct"];
-//    failureExpectation.inverted = true;
-//
-//    [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
-//        [failureExpectation fulfill];
-//    } onSuccess:^(Lyrics * _Nonnull response) {
-//        [correctExpectation fulfill];
-//    }];
-//    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
-//}
+- (void) test_GivenOnSuccessResponseFromTheNetworkRepository_WhenGetLyricsForArtistAndSong_ThenCallCreateEntryOnLocalStorageRepository {
+    NSString * artist = @"dummy-artist";
+    NSString * song = @"dummy-song";
+
+    XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is correct"];
+    XCTestExpectation * failureExpectationNetworkError = [[XCTestExpectation alloc] initWithDescription:@"onError is not correct"];
+    failureExpectationNetworkError.inverted = true;
+    XCTestExpectation * failureExpectationDatabaseError = [[XCTestExpectation alloc] initWithDescription:@"LocalStorageRepository should've stored the new entry"];
+    failureExpectationDatabaseError.inverted = true;
+    
+    _networkRepository.fetchLyricsForArtistExpectedResultSuccess = true;
+    _localStorageRepository.createShouldSucceed = true;
+    
+    GetLyricsInteractorTests * __weak weakSelf = self;
+    
+    [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
+        [failureExpectationNetworkError fulfill];
+    } onSuccess:^(Lyrics * _Nonnull response) {
+        if (weakSelf.localStorageRepository.entries.count == 1) {
+            [correctExpectation fulfill];
+        } else {
+            [failureExpectationDatabaseError fulfill];
+        }
+    }];
+    [self waitForExpectations:@[correctExpectation, failureExpectationNetworkError, failureExpectationDatabaseError] timeout:0.1];
+}
+- (void) test_GivenOnSuccessResponseFromTheNetworkRepositoryAndErrorFromTheDatabase_WhenGetLyricsForArtistAndSong_ThenThrowError {
+    NSString * artist = @"dummy-artist";
+    NSString * song = @"dummy-song";
+
+    XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is expected"];
+    XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess should not be reached"];
+    failureExpectation.inverted = true;
+    
+    _networkRepository.fetchLyricsForArtistExpectedResultSuccess = true;
+    _localStorageRepository.createShouldSucceed = false;
+    
+    [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
+        XCTAssertEqual(error, LyricsGetableErrorUnableToStoreInDB);
+        [correctExpectation fulfill];
+    } onSuccess:^(Lyrics * _Nonnull response) {
+        [failureExpectation fulfill];
+    }];
+    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
+}
 @end

@@ -18,6 +18,7 @@
 
 @implementation GetLyricsInteractor
 - (void)getLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(LyricsGetableError))onError onSuccess:(void (^)(Lyrics * _Nonnull))onSuccess {
+    GetLyricsInteractor * __weak weakSelf = self;
     [_networkRepository fetchLyricsForArtist:artist andSong:song onError:^(NSError *error) {
         if (onError != nil) {
             if (error != nil && error.localizedDescription != nil && [error.localizedDescription isEqualToString:@"The request timed out."]) {
@@ -27,9 +28,13 @@
             }
         }
     } onSuccess:^(Lyrics *response) {
-        if (onSuccess != nil) {
-            onSuccess(response);
-        }
+        [weakSelf.localStorageRepository create:response onSuccess:^{
+            if (onSuccess != nil) {
+                onSuccess(response);
+            }
+        } onError:^(LocalStorageRepositoryError error) {
+            onError(LyricsGetableErrorUnableToStoreInDB);
+        }];
     }];
 }
 - (instancetype) initWithSystemConfig:(SystemConfigType) systemConfig {

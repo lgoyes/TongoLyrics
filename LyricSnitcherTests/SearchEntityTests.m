@@ -313,11 +313,15 @@
 }
 - (void) test_GivenNoResultError_WhenGetErrorMessageForErrorIsInvoked_ThenReturnAString {
     NSString * errorMessage = [_sut getErrorMessageFor: LyricsGetableErrorNoResult];
-    XCTAssertTrue([errorMessage isEqualToString:@"No lyrics found"]);
+    XCTAssertTrue([errorMessage isEqualToString:@"No lyrics found."]);
 }
 - (void) test_GivenUnknownError_WhenGetErrorMessageForErrorIsInvoked_ThenReturnAString {
     NSString * errorMessage = [_sut getErrorMessageFor: LyricsGetableErrorUnknown];
-    XCTAssertTrue([errorMessage isEqualToString:@"Unknown error"]);
+    XCTAssertTrue([errorMessage isEqualToString:@"Unknown error."]);
+}
+- (void) test_GivenDBError_WhenGetErrorMessageForErrorIsInvoked_ThenReturnAString {
+    NSString * errorMessage = [_sut getErrorMessageFor: LyricsGetableErrorUnableToStoreInDB];
+    XCTAssertTrue([errorMessage isEqualToString:@"There is an error with the history. Please re-install the app."]);
 }
 - (void) test_WhenHandleSearchLyricsError_ThenInvokeGetErrorMessageForError {
     SeamSearchEntity * _sut = [[SeamSearchEntity alloc] init];
