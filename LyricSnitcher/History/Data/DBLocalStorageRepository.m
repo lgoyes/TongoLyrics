@@ -10,6 +10,14 @@
 #import "AppDelegate.h"
 #import "DBLyrics+CoreDataClass.h"
 
+@interface DBLocalStorageRepository()
+- (NSFetchRequest*) getDefaultDBLyricsRequest;
+- (NSFetchRequest*) getDBLyricsRequestForSong: (NSString*) song andArtist: (NSString*) artist;
+- (void) findItemBySong: (NSString*) song andArtist: (NSString*) artist onSuccess: (void (^) (DBLyrics*)) onSuccess onError: (void (^) (LocalStorageRepositoryError)) onError;
+- (DBLyrics *) createNewDBLyricsEntry;
+- (void) updateEntry: (DBLyrics *) entry withLyrics: (Lyrics*) lyrics onSuccess: (void (^) (void)) onSuccess onError: (void (^) (LocalStorageRepositoryError)) onError;
+@end
+
 @implementation DBLocalStorageRepository
 - (instancetype)init
 {
@@ -22,39 +30,27 @@
 }
 
 - (void)create:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    DBLyrics * dbLyrics = (DBLyrics *)[NSEntityDescription insertNewObjectForEntityForName:@"DBLyrics" inManagedObjectContext:_context];
-    dbLyrics.artist = item.artist;
-    dbLyrics.song = item.song;
-    dbLyrics.lyrics = item.lyrics;
-    dbLyrics.date = item.date;
-    NSError * error;
-    if (![_context save:&error]) {
-        NSLog(@"Failed to save - error: %@", [error localizedDescription]);
-        onError(LocalStorageRepositoryErrorCreate);
-    } else {
+    DBLyrics * dbLyrics = [self createNewDBLyricsEntry];
+    [self updateEntry:dbLyrics withLyrics:item onSuccess:^{
         onSuccess();
-    }
+    } onError:^(LocalStorageRepositoryError error) {
+        onError(error);
+    }];
 }
 
 - (void)deleteBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"song == %@ && artist == %@", song, artist];
-    [request setPredicate:predicate];
     
-    NSError *error = nil;
-    NSArray *array = [_context executeFetchRequest:request error:&error];
-    if (error == nil || array.count == 0) {
-        DBLyrics * dbLyrics = (DBLyrics *) array[0];
-        [_context deleteObject:dbLyrics];
+    DBLocalStorageRepository * __weak weakSelf = self;
+    [self findItemBySong:song andArtist:artist onSuccess:^(DBLyrics * dbLyrics) {
+        [weakSelf.context deleteObject:dbLyrics];
         onSuccess();
-    } else {
-        NSLog(@"Failed to delete - error: %@", [error localizedDescription]);
-        onError(LocalStorageRepositoryErrorEntryDoesNotExist);
-    }
+    } onError:^(LocalStorageRepositoryError error) {
+        onError(error);
+    }];
 }
 
 - (void)list:(void (^)(NSArray *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
+    NSFetchRequest *request = [self getDefaultDBLyricsRequest];
     
     NSError *error = nil;
     NSArray *array = [_context executeFetchRequest:request error:&error];
@@ -67,47 +63,71 @@
 }
 
 - (void)readBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(Lyrics*))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
+    
+    [self findItemBySong:song andArtist:artist onSuccess:^(DBLyrics * dbLyrics) {
+        Lyrics * lyrics = [[Lyrics alloc] initWithLyrics:dbLyrics.lyrics artist:dbLyrics.artist song:dbLyrics.song andDate:dbLyrics.date];
+        onSuccess(lyrics);
+    } onError:^(LocalStorageRepositoryError error) {
+        onError(error);
+    }];
+}
 
+- (void)updateBySong:(NSString *)song andArtist:(NSString *)artist item:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    
+    DBLocalStorageRepository * __weak weakSelf = self;
+    [self findItemBySong:song andArtist:artist onSuccess:^(DBLyrics * dbLyrics) {
+        [weakSelf updateEntry:dbLyrics withLyrics:item onSuccess:^{
+            onSuccess();
+        } onError:^(LocalStorageRepositoryError error) {
+            onError(error);
+        }];
+    } onError:^(LocalStorageRepositoryError error) {
+        onError(error);
+    }];
+}
+
+- (NSFetchRequest *)getDefaultDBLyricsRequest {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
+    return request;
+}
+
+- (NSFetchRequest *)getDBLyricsRequestForSong:(NSString *)song andArtist:(NSString *)artist {
+    NSFetchRequest * request = [self getDefaultDBLyricsRequest];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"song == %@ && artist == %@", song, artist];
     [request setPredicate:predicate];
+    return request;
+}
+
+- (void)findItemBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(DBLyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    NSFetchRequest *request = [self getDBLyricsRequestForSong:song andArtist:artist];
     
     NSError *error = nil;
     NSArray *array = [_context executeFetchRequest:request error:&error];
-    if (error == nil || array.count == 0) {
+    if (error == nil || array.count > 0) {
         DBLyrics * dbLyrics = (DBLyrics *) array[0];
-        Lyrics * lyrics = [[Lyrics alloc] initWithLyrics:dbLyrics.lyrics artist:dbLyrics.artist song:dbLyrics.song andDate:dbLyrics.date];
-        onSuccess(lyrics);
+        onSuccess(dbLyrics);
     } else {
         NSLog(@"Failed to read - error: %@", [error localizedDescription]);
         onError(LocalStorageRepositoryErrorEntryDoesNotExist);
     }
 }
 
-- (void)updateBySong:(NSString *)song andArtist:(NSString *)artist item:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
+- (DBLyrics *)createNewDBLyricsEntry {
+    DBLyrics * newEntry = (DBLyrics *)[NSEntityDescription insertNewObjectForEntityForName:@"DBLyrics" inManagedObjectContext:_context];
+    return newEntry;
+}
 
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"song == %@ && artist == %@", song, artist];
-    [request setPredicate:predicate];
-    
-    NSError *error = nil;
-    NSArray *array = [_context executeFetchRequest:request error:&error];
-    if (error == nil || array.count == 0) {
-        DBLyrics * dbLyrics = (DBLyrics *) array[0];
-        dbLyrics.artist = item.artist;
-        dbLyrics.song = item.song;
-        dbLyrics.lyrics = item.lyrics;
-        dbLyrics.date = item.date;
-        NSError * error;
-        if (![_context save:&error]) {
-            NSLog(@"Failed to save - error: %@", [error localizedDescription]);
-            onError(LocalStorageRepositoryErrorEntryDoesNotExist);
-        } else {
-            onSuccess();
-        }
+- (void)updateEntry:(DBLyrics *)entry withLyrics:(Lyrics *)lyrics onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    entry.artist = lyrics.artist;
+    entry.song = lyrics.song;
+    entry.lyrics = lyrics.lyrics;
+    entry.date = lyrics.date;
+    NSError * error;
+    if (![_context save:&error]) {
+        NSLog(@"Failed to save - error: %@", [error localizedDescription]);
+        onError(LocalStorageRepositoryErrorCreate);
     } else {
-        NSLog(@"Failed to read - error: %@", [error localizedDescription]);
-        onError(LocalStorageRepositoryErrorEntryDoesNotExist);
+        onSuccess();
     }
 }
 

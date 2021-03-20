@@ -10,6 +10,8 @@
 		0C0746FB2604DEF400B7B985 /* LocalLyricsRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0746FA2604DEF400B7B985 /* LocalLyricsRepository.m */; };
 		0C0747002604DF8400B7B985 /* LocalLyricsRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */; };
 		0C0747062604E35E00B7B985 /* Lyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0747052604E35E00B7B985 /* Lyrics.m */; };
+		0C0B044826066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B044726066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m */; };
+		0C0B044D26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B044C26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m */; };
 		0C61AC70260552A200834474 /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C61AC6F260552A200834474 /* ReaderViewController.m */; };
 		0C61AC78260554E700834474 /* ReaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C61AC77260554E700834474 /* ReaderView.xib */; };
 		0C7D3F032604EAC30097701A /* GetLyricsInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7D3F022604EAC30097701A /* GetLyricsInteractor.m */; };
@@ -55,6 +57,9 @@
 		0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalLyricsRepositoryTests.m; sourceTree = "<group>"; };
 		0C0747042604E35E00B7B985 /* Lyrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lyrics.h; sourceTree = "<group>"; };
 		0C0747052604E35E00B7B985 /* Lyrics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lyrics.m; sourceTree = "<group>"; };
+		0C0B044626066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimplifiedLocalStorageRepository.h; sourceTree = "<group>"; };
+		0C0B044726066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimplifiedLocalStorageRepository.m; sourceTree = "<group>"; };
+		0C0B044C26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimplifiedLocalStorageRepositoryTests.m; sourceTree = "<group>"; };
 		0C4B533726050E2100777111 /* LyricsGetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsGetable.h; sourceTree = "<group>"; };
 		0C61AC6E260552A200834474 /* ReaderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReaderViewController.h; sourceTree = "<group>"; };
 		0C61AC6F260552A200834474 /* ReaderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReaderViewController.m; sourceTree = "<group>"; };
@@ -167,6 +172,7 @@
 				0C0746FF2604DF8400B7B985 /* LocalLyricsRepositoryTests.m */,
 				0C7D3F072604EBB60097701A /* GetLyricsInteractorTests.m */,
 				0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */,
+				0C0B044C26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m */,
 			);
 			path = LyricSnitcherTests;
 			sourceTree = "<group>";
@@ -251,6 +257,8 @@
 			children = (
 				0CCCB5DA260563EB0065FF63 /* DBLocalStorageRepository.h */,
 				0CCCB5DB260563EB0065FF63 /* DBLocalStorageRepository.m */,
+				0C0B044626066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.h */,
+				0C0B044726066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -460,6 +468,7 @@
 				0C0747062604E35E00B7B985 /* Lyrics.m in Sources */,
 				0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */,
 				0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */,
+				0C0B044826066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m in Sources */,
 				0CCCB5DC260563EB0065FF63 /* DBLocalStorageRepository.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,6 +479,7 @@
 			files = (
 				0CCBBCCF2605019900F9C06F /* SearchEntityTests.m in Sources */,
 				0C8256322604567B00FC742D /* RemoteLyricsRepositoryTests.m in Sources */,
+				0C0B044D26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m in Sources */,
 				0C0747002604DF8400B7B985 /* LocalLyricsRepositoryTests.m in Sources */,
 				0C7D3F082604EBB60097701A /* GetLyricsInteractorTests.m in Sources */,
 			);
