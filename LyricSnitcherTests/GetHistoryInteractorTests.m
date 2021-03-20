@@ -30,11 +30,11 @@
 }
 
 - (void)create:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
 }
 
 - (void)deleteBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
 }
 
 - (void)list:(void (^)(NSArray *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
@@ -46,11 +46,11 @@
 }
 
 - (void)readBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
 }
 
 - (void)updateBySong:(NSString *)song andArtist:(NSString *)artist item:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
 }
 @end
 
