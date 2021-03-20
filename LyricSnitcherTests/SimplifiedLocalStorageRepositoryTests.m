@@ -11,7 +11,7 @@
 #pragma mark - SimplifiedLocalStorageRepositoryTests
 
 @interface SimplifiedLocalStorageRepositoryTests : XCTestCase
-@property (nonatomic) SimplifiedLocalStorageRepository * sut;
+@property (strong, nonatomic) SimplifiedLocalStorageRepository * sut;
 @end
 
 @implementation SimplifiedLocalStorageRepositoryTests

@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DBLocalStorageRepository : NSObject <LocalStorageRepositoryType>
-@property (nonatomic) NSManagedObjectContext * context;
+@property (weak, nonatomic) NSManagedObjectContext * context;
 @end
 
 NS_ASSUME_NONNULL_END

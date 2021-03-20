@@ -73,9 +73,9 @@
 
 @interface FakeSearchController : NSObject <SearchControllerType>
 @property (nonatomic) bool getSongWasCalled;
-@property (nonatomic) NSString* song;
+@property (strong, nonatomic) NSString* song;
 @property (nonatomic) bool getArtistWasCalled;
-@property (nonatomic) NSString* artist;
+@property (strong, nonatomic) NSString* artist;
 @property (nonatomic) bool hideArtistErrorWasCalled;
 @property (nonatomic) bool hideSongErrorWasCalled;
 @property (nonatomic) bool showArtistErrorWasCalled;
@@ -149,9 +149,9 @@
 #pragma mark - SearchEntityTests
 
 @interface SearchEntityTests : XCTestCase
-@property (nonatomic) SearchEntity * sut;
-@property (nonatomic) FakeFetchInteractor* fakeInteractor;
-@property (nonatomic) FakeSearchController * fakeController;
+@property (strong, nonatomic) SearchEntity * sut;
+@property (strong, nonatomic) FakeFetchInteractor* fakeInteractor;
+@property (strong, nonatomic) FakeSearchController * fakeController;
 @end
 
 @implementation SearchEntityTests

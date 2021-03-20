@@ -8,7 +8,7 @@
 #import "RemoteLyricsRepository.h"
 
 @interface RemoteLyricsRepository()
-@property (nonatomic) NSString * apiBaseURL;
+@property (strong, nonatomic) NSString * apiBaseURL;
 @end
 
 @implementation RemoteLyricsRepository

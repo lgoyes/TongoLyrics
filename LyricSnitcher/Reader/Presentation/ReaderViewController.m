@@ -11,7 +11,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-@property (nonatomic) Lyrics * content;
+@property (strong, nonatomic) Lyrics * content;
 @end
 
 @implementation ReaderViewController

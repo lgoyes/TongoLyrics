@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface APILyrics : NSObject
-@property (nonatomic) NSString * lyrics;
+@property (strong, nonatomic) NSString * lyrics;
 -(instancetype) initWithLyrics: (NSString*) lyrics;
 @end
 

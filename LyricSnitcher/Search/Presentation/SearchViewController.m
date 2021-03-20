@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingLyricsActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIStackView *previousSearchStackContainer;
 
-@property (nonatomic) id<SearchEntityType> entity;
+@property (strong, nonatomic) id<SearchEntityType> entity;
 @end
 
 @implementation SearchViewController

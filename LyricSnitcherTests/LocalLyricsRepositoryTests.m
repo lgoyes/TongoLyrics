@@ -10,7 +10,7 @@
 #import "Lyrics.h"
 
 @interface LocalLyricsRepositoryTests : XCTestCase
-@property LocalLyricsRepository* sut;
+@property (strong, nonatomic) LocalLyricsRepository* sut;
 @end
 
 @implementation LocalLyricsRepositoryTests

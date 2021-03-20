@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GetLyricsInteractor : NSObject <LyricsGetable>
-@property (nonatomic) id<LyricsRepositoryProtocol> networkRepository;
+@property (strong, nonatomic) id<LyricsRepositoryProtocol> networkRepository;
 - (instancetype) initWithSystemConfig:(SystemConfigType) systemConfig;
 @end
 

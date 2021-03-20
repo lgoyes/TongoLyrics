@@ -42,8 +42,8 @@
 #pragma mark - GetLyricsInteractorTests
 
 @interface GetLyricsInteractorTests : XCTestCase
-@property GetLyricsInteractor* sut;
-@property FakeNetworkRepository* networkRepository;
+@property (strong, nonatomic) GetLyricsInteractor* sut;
+@property (strong, nonatomic) FakeNetworkRepository* networkRepository;
 @end
 
 @implementation GetLyricsInteractorTests

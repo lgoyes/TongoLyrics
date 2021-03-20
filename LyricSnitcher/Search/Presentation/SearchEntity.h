@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchEntity : NSObject <SearchEntityType>
 @property (weak, nonatomic) id<SearchControllerType> controller;
-@property (nonatomic) id<LyricsGetable> getLyricsInteractor;
+@property (strong, nonatomic) id<LyricsGetable> getLyricsInteractor;
 - (BOOL) validateSongField;
 - (BOOL) validateArtistField;
 - (BOOL) validateForm;

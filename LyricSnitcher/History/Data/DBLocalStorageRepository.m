@@ -13,9 +13,9 @@
 @interface DBLocalStorageRepository()
 - (NSFetchRequest*) getDefaultDBLyricsRequest;
 - (NSFetchRequest*) getDBLyricsRequestForSong: (NSString*) song andArtist: (NSString*) artist;
-- (void) findItemBySong: (NSString*) song andArtist: (NSString*) artist onSuccess: (void (^) (DBLyrics*)) onSuccess onError: (void (^) (LocalStorageRepositoryError)) onError;
+- (void) findItemBySong: (NSString*) song andArtist: (NSString*) artist onSuccess: (void (^) (DBLyrics* item)) onSuccess onError: (void (^) (LocalStorageRepositoryError error)) onError;
 - (DBLyrics *) createNewDBLyricsEntry;
-- (void) updateEntry: (DBLyrics *) entry withLyrics: (Lyrics*) lyrics onSuccess: (void (^) (void)) onSuccess onError: (void (^) (LocalStorageRepositoryError)) onError;
+- (void) updateEntry: (DBLyrics *) entry withLyrics: (Lyrics*) lyrics onSuccess: (void (^) (void)) onSuccess onError: (void (^) (LocalStorageRepositoryError error)) onError;
 @end
 
 @implementation DBLocalStorageRepository

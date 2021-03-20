@@ -9,7 +9,7 @@
 #import "Lyrics.h"
 
 @interface SimplifiedLocalStorageRepository()
-@property (nonatomic) NSMutableArray* entries;
+@property (strong, nonatomic) NSMutableArray* entries;
 @end
 
 @implementation SimplifiedLocalStorageRepository

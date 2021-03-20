@@ -10,7 +10,7 @@
 #import "APILyrics.h"
 
 @interface RemoteLyricsRepositoryTests : XCTestCase
-@property RemoteLyricsRepository* sut;
+@property (strong, nonatomic) RemoteLyricsRepository* sut;
 @end
 
 @implementation RemoteLyricsRepositoryTests

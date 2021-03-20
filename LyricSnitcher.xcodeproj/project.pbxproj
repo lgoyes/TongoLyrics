@@ -12,6 +12,8 @@
 		0C0747062604E35E00B7B985 /* Lyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0747052604E35E00B7B985 /* Lyrics.m */; };
 		0C0B044826066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B044726066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m */; };
 		0C0B044D26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B044C26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m */; };
+		0C0B045326067ED200C0A9D0 /* GetHistoryInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B045226067ED200C0A9D0 /* GetHistoryInteractor.m */; };
+		0C0B045C2606801A00C0A9D0 /* GetHistoryInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */; };
 		0C61AC70260552A200834474 /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C61AC6F260552A200834474 /* ReaderViewController.m */; };
 		0C61AC78260554E700834474 /* ReaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C61AC77260554E700834474 /* ReaderView.xib */; };
 		0C7D3F032604EAC30097701A /* GetLyricsInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7D3F022604EAC30097701A /* GetLyricsInteractor.m */; };
@@ -60,6 +62,10 @@
 		0C0B044626066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimplifiedLocalStorageRepository.h; sourceTree = "<group>"; };
 		0C0B044726066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimplifiedLocalStorageRepository.m; sourceTree = "<group>"; };
 		0C0B044C26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimplifiedLocalStorageRepositoryTests.m; sourceTree = "<group>"; };
+		0C0B045126067ED200C0A9D0 /* GetHistoryInteractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetHistoryInteractor.h; sourceTree = "<group>"; };
+		0C0B045226067ED200C0A9D0 /* GetHistoryInteractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetHistoryInteractor.m; sourceTree = "<group>"; };
+		0C0B045726067EED00C0A9D0 /* HistoryGetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryGetable.h; sourceTree = "<group>"; };
+		0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetHistoryInteractorTests.m; sourceTree = "<group>"; };
 		0C4B533726050E2100777111 /* LyricsGetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsGetable.h; sourceTree = "<group>"; };
 		0C61AC6E260552A200834474 /* ReaderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReaderViewController.h; sourceTree = "<group>"; };
 		0C61AC6F260552A200834474 /* ReaderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReaderViewController.m; sourceTree = "<group>"; };
@@ -173,6 +179,7 @@
 				0C7D3F072604EBB60097701A /* GetLyricsInteractorTests.m */,
 				0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */,
 				0C0B044C26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m */,
+				0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */,
 			);
 			path = LyricSnitcherTests;
 			sourceTree = "<group>";
@@ -267,6 +274,9 @@
 			isa = PBXGroup;
 			children = (
 				0CCCB5EF2605644D0065FF63 /* LocalStorageRepository.h */,
+				0C0B045126067ED200C0A9D0 /* GetHistoryInteractor.h */,
+				0C0B045226067ED200C0A9D0 /* GetHistoryInteractor.m */,
+				0C0B045726067EED00C0A9D0 /* HistoryGetable.h */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -469,6 +479,7 @@
 				0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */,
 				0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */,
 				0C0B044826066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m in Sources */,
+				0C0B045326067ED200C0A9D0 /* GetHistoryInteractor.m in Sources */,
 				0CCCB5DC260563EB0065FF63 /* DBLocalStorageRepository.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,6 +492,7 @@
 				0C8256322604567B00FC742D /* RemoteLyricsRepositoryTests.m in Sources */,
 				0C0B044D26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m in Sources */,
 				0C0747002604DF8400B7B985 /* LocalLyricsRepositoryTests.m in Sources */,
+				0C0B045C2606801A00C0A9D0 /* GetHistoryInteractorTests.m in Sources */,
 				0C7D3F082604EBB60097701A /* GetLyricsInteractorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
