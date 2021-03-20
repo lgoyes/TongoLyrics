@@ -14,6 +14,8 @@
 		0C0B044D26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B044C26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m */; };
 		0C0B045326067ED200C0A9D0 /* GetHistoryInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B045226067ED200C0A9D0 /* GetHistoryInteractor.m */; };
 		0C0B045C2606801A00C0A9D0 /* GetHistoryInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */; };
+		0C5412A026069D5D0048C3C6 /* HistoryEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C54129F26069D5D0048C3C6 /* HistoryEntity.m */; };
+		0C5412A626069D850048C3C6 /* HistoryEntityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5412A526069D850048C3C6 /* HistoryEntityTests.m */; };
 		0C61AC70260552A200834474 /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C61AC6F260552A200834474 /* ReaderViewController.m */; };
 		0C61AC78260554E700834474 /* ReaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C61AC77260554E700834474 /* ReaderView.xib */; };
 		0C7D3F032604EAC30097701A /* GetLyricsInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7D3F022604EAC30097701A /* GetLyricsInteractor.m */; };
@@ -67,6 +69,10 @@
 		0C0B045726067EED00C0A9D0 /* HistoryGetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryGetable.h; sourceTree = "<group>"; };
 		0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetHistoryInteractorTests.m; sourceTree = "<group>"; };
 		0C4B533726050E2100777111 /* LyricsGetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsGetable.h; sourceTree = "<group>"; };
+		0C54129E26069D5D0048C3C6 /* HistoryEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryEntity.h; sourceTree = "<group>"; };
+		0C54129F26069D5D0048C3C6 /* HistoryEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryEntity.m; sourceTree = "<group>"; };
+		0C5412A426069D6A0048C3C6 /* HistoryPresentationContract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryPresentationContract.h; sourceTree = "<group>"; };
+		0C5412A526069D850048C3C6 /* HistoryEntityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryEntityTests.m; sourceTree = "<group>"; };
 		0C61AC6E260552A200834474 /* ReaderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReaderViewController.h; sourceTree = "<group>"; };
 		0C61AC6F260552A200834474 /* ReaderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReaderViewController.m; sourceTree = "<group>"; };
 		0C61AC77260554E700834474 /* ReaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReaderView.xib; sourceTree = "<group>"; };
@@ -180,6 +186,7 @@
 				0CCBBCCE2605019900F9C06F /* SearchEntityTests.m */,
 				0C0B044C26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m */,
 				0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */,
+				0C5412A526069D850048C3C6 /* HistoryEntityTests.m */,
 			);
 			path = LyricSnitcherTests;
 			sourceTree = "<group>";
@@ -284,6 +291,9 @@
 		0C8256232604551C00FC742D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				0C54129E26069D5D0048C3C6 /* HistoryEntity.h */,
+				0C54129F26069D5D0048C3C6 /* HistoryEntity.m */,
+				0C5412A426069D6A0048C3C6 /* HistoryPresentationContract.h */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -468,6 +478,7 @@
 				0C8256452604587900FC742D /* APILyrics.m in Sources */,
 				0C7D3F032604EAC30097701A /* GetLyricsInteractor.m in Sources */,
 				0C8255F02604054400FC742D /* main.m in Sources */,
+				0C5412A026069D5D0048C3C6 /* HistoryEntity.m in Sources */,
 				0C825629260455E000FC742D /* RemoteLyricsRepository.m in Sources */,
 				0C61AC70260552A200834474 /* ReaderViewController.m in Sources */,
 				0C0746FB2604DEF400B7B985 /* LocalLyricsRepository.m in Sources */,
@@ -488,6 +499,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C5412A626069D850048C3C6 /* HistoryEntityTests.m in Sources */,
 				0CCBBCCF2605019900F9C06F /* SearchEntityTests.m in Sources */,
 				0C8256322604567B00FC742D /* RemoteLyricsRepositoryTests.m in Sources */,
 				0C0B044D26066CC300C0A9D0 /* SimplifiedLocalStorageRepositoryTests.m in Sources */,
