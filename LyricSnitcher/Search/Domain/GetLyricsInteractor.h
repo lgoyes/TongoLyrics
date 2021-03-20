@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LyricsRepositoryProtocol.h"
+#import "LocalStorageRepository.h"
 #import "SystemConfig.h"
 #import "LyricsGetable.h"
 
@@ -14,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GetLyricsInteractor : NSObject <LyricsGetable>
 @property (strong, nonatomic) id<LyricsRepositoryProtocol> networkRepository;
+@property (strong, nonatomic) id<LocalStorageRepositoryType> localStorageRepository;
 - (instancetype) initWithSystemConfig:(SystemConfigType) systemConfig;
 @end
 

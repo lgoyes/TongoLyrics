@@ -8,9 +8,12 @@
 #import "GetLyricsInteractor.h"
 #import "RemoteLyricsRepository.h"
 #import "LocalLyricsRepository.h"
+#import "DBLocalStorageRepository.h"
+#import "SimplifiedLocalStorageRepository.h"
 
 @interface GetLyricsInteractor()
-+ (id<LyricsRepositoryProtocol>) getRepositoryFor:(SystemConfigType) config;
++ (id<LyricsRepositoryProtocol>) getNetworkRepositoryFor:(SystemConfigType) config;
++ (id<LocalStorageRepositoryType>) getLocalStorageRepositoryFor:(SystemConfigType) config;
 @end
 
 @implementation GetLyricsInteractor
@@ -32,7 +35,8 @@
 - (instancetype) initWithSystemConfig:(SystemConfigType) systemConfig {
     self = [super init];
     if (self) {
-        _networkRepository = [GetLyricsInteractor getRepositoryFor:systemConfig];
+        _networkRepository = [GetLyricsInteractor getNetworkRepositoryFor:systemConfig];
+        _localStorageRepository = [GetLyricsInteractor getLocalStorageRepositoryFor:systemConfig];
     }
     return self;
 }
@@ -41,16 +45,25 @@
     self = [super init];
     if (self) {
         SystemConfigType systemConfig = [SystemConfig getCurrent];
-        _networkRepository = [GetLyricsInteractor getRepositoryFor:systemConfig];
+        _networkRepository = [GetLyricsInteractor getNetworkRepositoryFor:systemConfig];
+        _localStorageRepository = [GetLyricsInteractor getLocalStorageRepositoryFor:systemConfig];
     }
     return self;
 }
-+(id<LyricsRepositoryProtocol>)getRepositoryFor:(SystemConfigType)config {
++(id<LyricsRepositoryProtocol>)getNetworkRepositoryFor:(SystemConfigType)config {
     switch (config) {
         case SystemConfigTypeRelease:
             return [[RemoteLyricsRepository alloc] init];
         case SystemConfigTypeDebug:
             return [[LocalLyricsRepository alloc] init];
+    }
+}
++ (id<LocalStorageRepositoryType>)getLocalStorageRepositoryFor:(SystemConfigType)config {
+    switch (config) {
+        case SystemConfigTypeRelease:
+            return [[DBLocalStorageRepository alloc] init];
+        case SystemConfigTypeDebug:
+            return [[SimplifiedLocalStorageRepository alloc] init];
     }
 }
 @end

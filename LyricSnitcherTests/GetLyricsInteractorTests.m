@@ -10,6 +10,52 @@
 #import "LocalLyricsRepository.h"
 #import "RemoteLyricsRepository.h"
 #import "LyricsRepositoryProtocol.h"
+#import "LocalStorageRepository.h"
+#import "DBLocalStorageRepository.h"
+#import "SimplifiedLocalStorageRepository.h"
+
+#pragma mark - FakeNetworkRepository
+
+@interface FakeLocalStorageRepositoryForGetLyricsInteractor : NSObject <LocalStorageRepositoryType>
+@property (strong, nonatomic) NSMutableArray * entries;
+@property (nonatomic) BOOL createShouldSucceed;
+@end
+
+@implementation FakeLocalStorageRepositoryForGetLyricsInteractor
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _entries = [@[] mutableCopy];
+        _createShouldSucceed = false;
+    }
+    return self;
+}
+
+- (void)create:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    if (_createShouldSucceed) {
+        onSuccess();
+    } else {
+        onError(LocalStorageRepositoryErrorCreate);
+    }
+}
+
+- (void)deleteBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
+}
+
+- (void)list:(void (^)(NSArray *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
+}
+
+- (void)readBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
+}
+
+- (void)updateBySong:(NSString *)song andArtist:(NSString *)artist item:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
+}
+@end
 
 #pragma mark - FakeNetworkRepository
 
@@ -44,6 +90,7 @@
 @interface GetLyricsInteractorTests : XCTestCase
 @property (strong, nonatomic) GetLyricsInteractor* sut;
 @property (strong, nonatomic) FakeNetworkRepository* networkRepository;
+@property (strong, nonatomic) FakeLocalStorageRepositoryForGetLyricsInteractor* localStorageRepository;
 @end
 
 @implementation GetLyricsInteractorTests
@@ -51,22 +98,34 @@
     [super setUpWithError:error];
     _sut = [[GetLyricsInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];
     _networkRepository = [[FakeNetworkRepository alloc] init];
+    _localStorageRepository = [[FakeLocalStorageRepositoryForGetLyricsInteractor alloc] init];
     _sut.networkRepository = _networkRepository;
+    _sut.localStorageRepository = _localStorageRepository;
     return true;
 }
 
 -(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+    _networkRepository = nil;
+    _localStorageRepository = nil;
     _sut = nil;
     [super tearDownWithError:error];
     return true;
 }
-- (void) test_WhenInitWithSystemConfigDebug_InitRepositoryWithLocalVersion {
+- (void) test_WhenInitWithSystemConfigDebug_InitNetworkRepositoryWithLocalVersion {
     _sut = [[GetLyricsInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];
     XCTAssertTrue([_sut.networkRepository isKindOfClass: LocalLyricsRepository.class]);
 }
-- (void) test_WhenInitWithSystemConfigRelease_InitRepositoryWithRemoteeVersion {
+- (void) test_WhenInitWithSystemConfigRelease_InitNetworkRepositoryWithRemoteeVersion {
     _sut = [[GetLyricsInteractor alloc] initWithSystemConfig:SystemConfigTypeRelease];
     XCTAssertTrue([_sut.networkRepository isKindOfClass: RemoteLyricsRepository.class]);
+}
+- (void) test_WhenInitWithSystemConfigDebug_InitLocalStorageRepositoryWithSimplifiedVersion {
+    _sut = [[GetLyricsInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];
+    XCTAssertTrue([_sut.localStorageRepository isKindOfClass: SimplifiedLocalStorageRepository.class]);
+}
+- (void) test_WhenInitWithSystemConfigRelease_InitLocalStorageRepositoryWithDBVersion {
+    _sut = [[GetLyricsInteractor alloc] initWithSystemConfig:SystemConfigTypeRelease];
+    XCTAssertTrue([_sut.localStorageRepository isKindOfClass: DBLocalStorageRepository.class]);
 }
 - (void) test_GivenValidArguments_WhenGetLyricsForArtistAndSong_ThenInvokeFetchLyricsForArtistInRepository {
     NSString * artist = @"dummy-artist";
@@ -113,4 +172,19 @@
     }];
     [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
 }
+//- (void) test_GivenOnSuccessResponseFromTheNetworkRepository_WhenGetLyricsForArtistAndSong_ThenCallCreateEntryOnLocalStorageRepository {
+//    NSString * artist = @"dummy-artist";
+//    NSString * song = @"dummy-song";
+//
+//    XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is correct"];
+//    XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is not correct"];
+//    failureExpectation.inverted = true;
+//
+//    [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
+//        [failureExpectation fulfill];
+//    } onSuccess:^(Lyrics * _Nonnull response) {
+//        [correctExpectation fulfill];
+//    }];
+//    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
+//}
 @end
