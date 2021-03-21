@@ -158,6 +158,7 @@
 		0C8255CE2604054400FC742D = {
 			isa = PBXGroup;
 			children = (
+				0C4773BC2607C98A00DA489B /* README.md */,
 				0C8255D92604054400FC742D /* LyricSnitcher */,
 				0C8255F82604054400FC742D /* LyricSnitcherTests */,
 				0C8256032604054400FC742D /* LyricSnitcherUITests */,
@@ -188,7 +189,6 @@
 				0C8255EB2604054400FC742D /* LaunchScreen.storyboard */,
 				0C8255EF2604054400FC742D /* main.m */,
 				0C8255E62604054400FC742D /* LyricSnitcher.xcdatamodeld */,
-				0C4773BC2607C98A00DA489B /* README.md */,
 			);
 			path = LyricSnitcher;
 			sourceTree = "<group>";
