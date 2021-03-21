@@ -20,7 +20,16 @@
     if (self) {
         Lyrics * defaultEntry = [[Lyrics alloc] initWithLyrics:@"dummy-string-for-lyrics" artist:@"dummy-string-for-artist" song:@"dummy-string-for-song" andDate:[NSDate now]];
         _entries = [@[defaultEntry] mutableCopy];
-        _shouldSuccessfullyStoreEntry = false;
+        _shouldSuccessfullyStoreEntry = true;
+    }
+    return self;
+}
+
+- (instancetype)initWithEntryManager: (SimplifiedEntriesManager*) manager {
+    self = [super init];
+    if (self) {
+        _entries = manager.entries;
+        _shouldSuccessfullyStoreEntry = true;
     }
     return self;
 }

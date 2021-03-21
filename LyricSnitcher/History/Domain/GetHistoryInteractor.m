@@ -45,7 +45,7 @@
         case SystemConfigTypeRelease:
             return [[DBLocalStorageRepository alloc] init];
         case SystemConfigTypeDebug:
-            return [[SimplifiedLocalStorageRepository alloc] init];
+            return [[SimplifiedLocalStorageRepository alloc] initWithEntryManager:SimplifiedEntriesManager.sharedManager];
     }
 }
 @end

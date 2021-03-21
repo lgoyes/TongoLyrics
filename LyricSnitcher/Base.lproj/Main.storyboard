@@ -31,7 +31,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We tell you what's next" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="05c-Xc-Wdk">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Just sing. We'll give you the lyrics." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="05c-Xc-Wdk">
                                                         <rect key="frame" x="0.0" y="86.5" width="374" height="25.5"/>
                                                         <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="25"/>
                                                         <nil key="textColor"/>
@@ -159,14 +159,114 @@
                     <view key="view" contentMode="scaleToFill" id="L6U-Q5-LRY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HFu-Kv-crq">
+                                <rect key="frame" x="20" y="64" width="374" height="729"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4f5-fG-Zdz" userLabel="TitleContainer">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="152"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xbh-ip-cVQ">
+                                                <rect key="frame" x="10" y="20" width="354" height="112"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="History" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0aA-yN-OLf">
+                                                        <rect key="frame" x="0.0" y="0.0" width="354" height="86.5"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="60"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What did you sing before?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WNz-eB-Kb4">
+                                                        <rect key="frame" x="0.0" y="86.5" width="354" height="25.5"/>
+                                                        <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="25"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="xbh-ip-cVQ" firstAttribute="top" secondItem="4f5-fG-Zdz" secondAttribute="top" constant="20" id="Ccx-Wm-m0Z"/>
+                                            <constraint firstAttribute="bottom" secondItem="xbh-ip-cVQ" secondAttribute="bottom" constant="20" id="YUR-zg-9UU"/>
+                                            <constraint firstItem="xbh-ip-cVQ" firstAttribute="leading" secondItem="4f5-fG-Zdz" secondAttribute="leading" constant="10" id="lPR-r6-P0K"/>
+                                            <constraint firstAttribute="trailing" secondItem="xbh-ip-cVQ" secondAttribute="trailing" constant="10" id="pRL-b8-pjJ"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SdB-e7-2hn">
+                                        <rect key="frame" x="0.0" y="152" width="374" height="577"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="HistoryCell" rowHeight="68" id="kGt-xW-wP1" customClass="HistoryTableViewCell">
+                                                <rect key="frame" x="0.0" y="28" width="374" height="68"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kGt-xW-wP1" id="wex-KH-Uqg">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="68"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="tSc-xJ-43R">
+                                                            <rect key="frame" x="20" y="11" width="315" height="46"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRX-dI-wyB">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="315" height="23"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="cE6-mQ-Ogi">
+                                                                    <rect key="frame" x="0.0" y="23" width="315" height="23"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ys-iJ-eT3">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="36.5" height="23"/>
+                                                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRT-tn-6FV">
+                                                                            <rect key="frame" x="279" y="0.0" width="36" height="23"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="tSc-xJ-43R" secondAttribute="trailing" id="G3G-sV-Hj8"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="tSc-xJ-43R" secondAttribute="bottom" id="HsD-gg-L7K"/>
+                                                        <constraint firstItem="tSc-xJ-43R" firstAttribute="leading" secondItem="wex-KH-Uqg" secondAttribute="leadingMargin" id="IbJ-ea-FQq"/>
+                                                        <constraint firstItem="tSc-xJ-43R" firstAttribute="top" secondItem="wex-KH-Uqg" secondAttribute="topMargin" id="OxW-8U-b02"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="artistLabel" destination="8Ys-iJ-eT3" id="das-1d-lwV"/>
+                                                    <outlet property="dateLabel" destination="IRT-tn-6FV" id="wVe-5Y-8h9"/>
+                                                    <outlet property="songLabel" destination="LRX-dI-wyB" id="Od0-bW-Fc0"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="sUI-TJ-Fkh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HFu-Kv-crq" firstAttribute="leading" secondItem="sUI-TJ-Fkh" secondAttribute="leading" constant="20" id="2Wb-63-umf"/>
+                            <constraint firstItem="sUI-TJ-Fkh" firstAttribute="trailing" secondItem="HFu-Kv-crq" secondAttribute="trailing" constant="20" id="WMO-us-oIK"/>
+                            <constraint firstItem="HFu-Kv-crq" firstAttribute="top" secondItem="sUI-TJ-Fkh" secondAttribute="top" constant="20" id="k8x-3p-Umx"/>
+                            <constraint firstItem="sUI-TJ-Fkh" firstAttribute="bottom" secondItem="HFu-Kv-crq" secondAttribute="bottom" constant="20" id="kXI-3i-HDe"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="History" image="clock" catalog="system" id="MMd-zm-g4F"/>
+                    <connections>
+                        <outlet property="table" destination="SdB-e7-2hn" id="muc-8q-TL4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y8F-lf-bSj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1051" y="821"/>
+            <point key="canvasLocation" x="1050.7246376811595" y="820.98214285714278"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Jkq-UQ-zr8">

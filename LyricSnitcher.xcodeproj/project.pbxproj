@@ -15,6 +15,8 @@
 		0C0B045326067ED200C0A9D0 /* GetHistoryInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B045226067ED200C0A9D0 /* GetHistoryInteractor.m */; };
 		0C0B045C2606801A00C0A9D0 /* GetHistoryInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */; };
 		0C0E7A9D260795B300894FAC /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E7A9C260795B300894FAC /* HistoryViewController.m */; };
+		0C0E7AAD26079BB500894FAC /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E7AAB26079BB500894FAC /* HistoryTableViewCell.m */; };
+		0C0E7AB72607A18A00894FAC /* SimplifiedEntriesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E7AB62607A18A00894FAC /* SimplifiedEntriesManager.m */; };
 		0C5412A026069D5D0048C3C6 /* HistoryEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C54129F26069D5D0048C3C6 /* HistoryEntity.m */; };
 		0C5412A626069D850048C3C6 /* HistoryEntityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5412A526069D850048C3C6 /* HistoryEntityTests.m */; };
 		0C61AC70260552A200834474 /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C61AC6F260552A200834474 /* ReaderViewController.m */; };
@@ -71,6 +73,10 @@
 		0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetHistoryInteractorTests.m; sourceTree = "<group>"; };
 		0C0E7A9B260795B300894FAC /* HistoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		0C0E7A9C260795B300894FAC /* HistoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		0C0E7AAA26079BB500894FAC /* HistoryTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewCell.h; sourceTree = "<group>"; };
+		0C0E7AAB26079BB500894FAC /* HistoryTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewCell.m; sourceTree = "<group>"; };
+		0C0E7AB52607A18A00894FAC /* SimplifiedEntriesManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimplifiedEntriesManager.h; sourceTree = "<group>"; };
+		0C0E7AB62607A18A00894FAC /* SimplifiedEntriesManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimplifiedEntriesManager.m; sourceTree = "<group>"; };
 		0C4B533726050E2100777111 /* LyricsGetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsGetable.h; sourceTree = "<group>"; };
 		0C54129E26069D5D0048C3C6 /* HistoryEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryEntity.h; sourceTree = "<group>"; };
 		0C54129F26069D5D0048C3C6 /* HistoryEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryEntity.m; sourceTree = "<group>"; };
@@ -276,6 +282,8 @@
 				0CCCB5DB260563EB0065FF63 /* DBLocalStorageRepository.m */,
 				0C0B044626066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.h */,
 				0C0B044726066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m */,
+				0C0E7AB52607A18A00894FAC /* SimplifiedEntriesManager.h */,
+				0C0E7AB62607A18A00894FAC /* SimplifiedEntriesManager.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -299,6 +307,8 @@
 				0C5412A426069D6A0048C3C6 /* HistoryPresentationContract.h */,
 				0C0E7A9B260795B300894FAC /* HistoryViewController.h */,
 				0C0E7A9C260795B300894FAC /* HistoryViewController.m */,
+				0C0E7AAA26079BB500894FAC /* HistoryTableViewCell.h */,
+				0C0E7AAB26079BB500894FAC /* HistoryTableViewCell.m */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -492,9 +502,11 @@
 				0C7D3F0E2604EC500097701A /* SystemConfig.m in Sources */,
 				0CCBBCCA2605006C00F9C06F /* SearchEntity.m in Sources */,
 				0C0E7A9D260795B300894FAC /* HistoryViewController.m in Sources */,
+				0C0E7AAD26079BB500894FAC /* HistoryTableViewCell.m in Sources */,
 				0C0747062604E35E00B7B985 /* Lyrics.m in Sources */,
 				0CCBBCC12604F91200F9C06F /* SearchViewController.m in Sources */,
 				0C8255DF2604054400FC742D /* SceneDelegate.m in Sources */,
+				0C0E7AB72607A18A00894FAC /* SimplifiedEntriesManager.m in Sources */,
 				0C0B044826066CAF00C0A9D0 /* SimplifiedLocalStorageRepository.m in Sources */,
 				0C0B045326067ED200C0A9D0 /* GetHistoryInteractor.m in Sources */,
 				0CCCB5DC260563EB0065FF63 /* DBLocalStorageRepository.m in Sources */,

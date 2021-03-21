@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HistoryViewController : UIViewController <HistoryControllerType>
+@interface HistoryViewController : UIViewController <HistoryControllerType, UITableViewDelegate, UITableViewDataSource>
 
 @end
 
