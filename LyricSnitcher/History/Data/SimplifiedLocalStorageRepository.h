@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SimplifiedLocalStorageRepository : NSObject <LocalStorageRepositoryType>
 - (NSArray*) getEntries;
+- (void) clearEntries;
 @property (nonatomic) BOOL shouldSuccessfullyStoreEntry;
 - (instancetype)initWithEntryManager: (SimplifiedEntriesManager*) manager;
 @end

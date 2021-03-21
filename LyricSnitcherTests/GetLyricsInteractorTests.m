@@ -56,6 +56,11 @@
 - (void)updateBySong:(NSString *)song andArtist:(NSString *)artist item:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
     [NSException raise:@"Invalid method call" format:@"This method should not be called"];
 }
+
+- (void)getLastRecord:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
+}
+
 @end
 
 #pragma mark - FakeNetworkRepository

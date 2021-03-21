@@ -195,4 +195,34 @@
     
     [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
 }
+
+- (void) test_GivenAtLeastOneEntry_WhenGetLastRecord_ReturnSuccess {
+    XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess should be called"];
+    XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError should not be called"];
+    failureExpectation.inverted = true;
+    
+    [_sut getLastRecord:^(Lyrics *item) {
+        [correctExpectation fulfill];
+    } onError:^(LocalStorageRepositoryError error) {
+        [failureExpectation fulfill];
+    }];
+    
+    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
+}
+- (void) test_GivenNoEntries_WhenGetLastRecord_ThrowError {
+    XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError should be called"];
+    XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess should not be called"];
+    failureExpectation.inverted = true;
+    
+    [_sut clearEntries];
+    
+    [_sut getLastRecord:^(Lyrics *item) {
+        [failureExpectation fulfill];
+    } onError:^(LocalStorageRepositoryError error) {
+        XCTAssertEqual(error, LocalStorageRepositoryErrorNoEntries);
+        [correctExpectation fulfill];
+    }];
+    
+    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
+}
 @end

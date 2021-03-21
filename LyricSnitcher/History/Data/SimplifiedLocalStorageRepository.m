@@ -38,6 +38,10 @@
     return _entries;
 }
 
+- (void)clearEntries {
+    _entries = [@[] mutableCopy];
+}
+
 - (void)create:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
     if (_shouldSuccessfullyStoreEntry) {
         [_entries addObject:item];
@@ -84,6 +88,15 @@
         }
     }
     onError(LocalStorageRepositoryErrorEntryDoesNotExist);
+}
+
+- (void)getLastRecord:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    int numberOfEntries = (int) _entries.count;
+    if (numberOfEntries > 0) {
+        onSuccess(_entries[numberOfEntries-1]);
+    } else {
+        onError(LocalStorageRepositoryErrorNoEntries);
+    }
 }
 
 @end

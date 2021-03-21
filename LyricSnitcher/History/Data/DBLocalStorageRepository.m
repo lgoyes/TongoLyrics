@@ -86,6 +86,27 @@
     }];
 }
 
+- (void)getLastRecord:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
+    NSFetchRequest * request = [self getDefaultDBLyricsRequest];
+    
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    NSError *error = nil;
+    NSArray *array = [_context executeFetchRequest:request error:&error];
+    if (error == nil) {
+        if (array.count == 0) {
+            NSLog(@"There are no entries");
+            onError(LocalStorageRepositoryErrorNoEntries);
+        } else {
+            onSuccess(array[0]);
+        }
+    } else {
+        NSLog(@"Failed to list entries - error: %@", [error localizedDescription]);
+        onError(LocalStorageRepositoryErrorList);
+    }
+}
+
 - (NSFetchRequest *)getDefaultDBLyricsRequest {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"DBLyrics"];
     return request;
