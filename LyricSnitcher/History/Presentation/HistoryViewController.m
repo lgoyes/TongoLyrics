@@ -14,6 +14,7 @@
 @property (strong, nonatomic) id<HistoryEntityType> entity;
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property (strong, nonatomic) NSArray * historyEntries;
+@property (strong, nonatomic) NSDateFormatter * dateFormatter;
 @end
 
 @implementation HistoryViewController
@@ -25,6 +26,11 @@
         _entity = [[HistoryEntity alloc] init];
         _historyEntries = @[];
         [_entity setController:self];
+        
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+        [_dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [_dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     }
     return self;
 }
@@ -70,7 +76,7 @@
     HistoryTableViewCell * cell = (HistoryTableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"HistoryCell" forIndexPath:indexPath];
     [cell setSong:entry.song];
     [cell setArtist:entry.artist];
-    [cell setDate:@"Dummy-date"];
+    [cell setDate: [_dateFormatter stringFromDate:entry.date]];
     return cell;
 }
 
