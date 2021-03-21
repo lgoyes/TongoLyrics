@@ -37,9 +37,14 @@
 }
 - (void)handleHistorySuccess:(NSArray *)history {
     if (history.count > 0) {
+        _historyEntries = [history copy];
         [_controller showHistory:history];
     } else {
         [_controller setEmptyState];
     }
+}
+- (void)onItemSelected:(int)indexSelected {
+    Lyrics * selectedLyrics = _historyEntries[indexSelected];
+    [_controller launchReaderWithLyrics:selectedLyrics];
 }
 @end

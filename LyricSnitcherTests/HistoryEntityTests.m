@@ -67,6 +67,7 @@
 @property (nonatomic) BOOL showHistoryWasCalled;
 @property (nonatomic) BOOL setEmptyStateWasCalled;
 @property (nonatomic) BOOL setLoadingStateWasCalled;
+@property (nonatomic) BOOL launchReaderWithLyricsWasCalled;
 @end
 @implementation FakeHistoryController
 - (void)showError:(NSString *)message {
@@ -80,6 +81,9 @@
 }
 - (void)setLoadingState {
     _setLoadingStateWasCalled = true;
+}
+- (void)launchReaderWithLyrics:(Lyrics *)lyrics {
+    _launchReaderWithLyricsWasCalled = true;
 }
 @end
 
@@ -165,5 +169,10 @@
 - (void) test_WhenStartLoadingIsInvoked_ThenCallSetLoadingStateOnController {
     [_sut startLoading];
     XCTAssertTrue(_fakeController.setLoadingStateWasCalled);
+}
+- (void) test_WhenOnItemSelected_ThenInvokeLaunchReaderWithLyricsOnController {
+    int selectedItemIndex = 0;
+    [_sut onItemSelected: selectedItemIndex];
+    XCTAssertTrue(_fakeController.launchReaderWithLyricsWasCalled);
 }
 @end

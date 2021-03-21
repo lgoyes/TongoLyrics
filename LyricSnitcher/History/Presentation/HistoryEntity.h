@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HistoryEntity : NSObject <HistoryEntityType>
 @property (weak, nonatomic) id<HistoryControllerType> controller;
 @property (strong, nonatomic) id<HistoryGetable> getHistoryInteractor;
+@property (strong, nonatomic) NSArray * historyEntries;
 - (void) getHistory;
 - (void) startLoading;
 - (void) handleHistoryError: (HistoryGetableError) error;
