@@ -22,11 +22,14 @@
 - (void) setSteadyState;
 - (void) showError: (NSString*) message;
 - (void) navigateToReader: (Lyrics*) lyrics;
+- (void) showLastEntry: (Lyrics*) lyrics;
 @end
 
 @protocol SearchEntityType <NSObject>
 - (void) onSearchButtonPressed;
 - (void) setController: (id<SearchControllerType>) controller;
+- (void) start;
+- (void) onLastEntryPressed;
 @end
 
 #endif /* SearchPresentationContract_h */

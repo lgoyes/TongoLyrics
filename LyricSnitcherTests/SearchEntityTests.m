@@ -8,6 +8,7 @@
 #import <XCTest/XCTest.h>
 #import "SearchEntity.h"
 #import "GetLyricsInteractor.h"
+#import "GetLastEntryInteractor.h"
 
 #pragma mark - SeamSearchEntity
 
@@ -19,6 +20,9 @@
 @property (nonatomic) BOOL handleLyricsSearchErrorWasCalled;
 @property (nonatomic) BOOL handleLyricsSearchSuccessWasCalled;
 @property (nonatomic) BOOL getErrorMessageWasCalled;
+@property (nonatomic) BOOL getLastEntryWasCalled;
+@property (nonatomic) BOOL handleOnGetLastEntrySuccessWasCalled;
+@property (nonatomic) BOOL handleOnGetLastEntryErrorWasCalled;
 @end
 @implementation SeamSearchEntity
 - (BOOL)validateForm {
@@ -49,6 +53,37 @@
     _getErrorMessageWasCalled = true;
     return [super getErrorMessageFor:error];
 }
+- (void)getLastEntry {
+    _getLastEntryWasCalled = true;
+    [super getLastEntry];
+}
+- (void)handleOnGetLastEntrySuccess:(Lyrics *)lyrics {
+    _handleOnGetLastEntrySuccessWasCalled = true;
+    [super handleOnGetLastEntrySuccess:lyrics];
+}
+- (void)handleOnGetLastEntryError:(LastEntryGetableError)error {
+    _handleOnGetLastEntryErrorWasCalled = true;
+    [super handleOnGetLastEntryError:error];
+}
+@end
+
+#pragma mark - FakeGetLastEntryInteractor
+
+@interface FakeGetLastEntryInteractor : NSObject <LastEntryGetable>
+@property (strong, nonatomic) Lyrics * lastEntry;
+@property (nonatomic) bool getLastEntryWasCalled;
+@end
+@implementation FakeGetLastEntryInteractor
+
+- (void)getLastEntry:(void (^)(Lyrics *))onSuccess onError:(void (^)(LastEntryGetableError))onError {
+    _getLastEntryWasCalled = true;
+    if (_lastEntry != nil) {
+        onSuccess(_lastEntry);
+    } else {
+        onError(LastEntryGetableErrorNoEntries);
+    }
+}
+
 @end
 
 #pragma mark - FakeFetchInteractor
@@ -84,24 +119,10 @@
 @property (nonatomic) bool setSteadyStateWasCalled;
 @property (nonatomic) bool showErrorWasCalled;
 @property (nonatomic) bool navigateToReaderWasCalled;
+@property (nonatomic) bool showLastEntryWasCalled;
 @end
 
 @implementation FakeSearchController
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _getSongWasCalled = false;
-        _getArtistWasCalled = false;
-        _hideArtistErrorWasCalled = false;
-        _hideSongErrorWasCalled = false;
-        _showArtistErrorWasCalled = false;
-        _showSongErrorWasCalled = false;
-        _setLoadingStateWasCalled = false;
-        _showErrorWasCalled = false;
-    }
-    return self;
-}
 - (NSString *)getSong {
     _getSongWasCalled = true;
     return _song;
@@ -144,6 +165,9 @@
     _navigateToReaderWasCalled = true;
 }
 
+- (void)showLastEntry:(Lyrics *)lyrics {
+    _showLastEntryWasCalled = true;
+}
 @end
 
 #pragma mark - SearchEntityTests
@@ -151,6 +175,7 @@
 @interface SearchEntityTests : XCTestCase
 @property (strong, nonatomic) SearchEntity * sut;
 @property (strong, nonatomic) FakeFetchInteractor* fakeInteractor;
+@property (strong, nonatomic) FakeGetLastEntryInteractor* fakeGetLastEntryInteractor;
 @property (strong, nonatomic) FakeSearchController * fakeController;
 @end
 
@@ -160,13 +185,16 @@
     _sut = [[SearchEntity alloc] init];
     _fakeInteractor = [[FakeFetchInteractor alloc] init];
     _fakeController = [[FakeSearchController alloc] init];
+    _fakeGetLastEntryInteractor = [[FakeGetLastEntryInteractor alloc] init];
     
     _sut.getLyricsInteractor = _fakeInteractor;
+    _sut.getLastEntryInteractor = _fakeGetLastEntryInteractor;
     _sut.controller = _fakeController;
     return true;
 }
 
 -(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+    _fakeGetLastEntryInteractor = nil;
     _fakeInteractor = nil;
     _fakeController = nil;
     _sut = nil;
@@ -176,6 +204,10 @@
 - (void) test_WhenInit_ThenCreateAnInstanceOfTheFetchInteractor {
     _sut = [[SearchEntity alloc] init];
     XCTAssertTrue([_sut.getLyricsInteractor isKindOfClass: GetLyricsInteractor.class]);
+}
+- (void) test_WhenInit_ThenCreateAnInstanceOfTheGetLastEntryInteractor {
+    _sut = [[SearchEntity alloc] init];
+    XCTAssertTrue([_sut.getLastEntryInteractor isKindOfClass: GetLastEntryInteractor.class]);
 }
 - (void) test_WhenInit_ThenControllerShouldBeNil {
     _sut = [[SearchEntity alloc] init];
@@ -332,5 +364,48 @@
     Lyrics * lyrics = [[Lyrics alloc] init];
     [_sut handleLyricsSearchSuccess:lyrics];
     XCTAssertTrue(_fakeController.navigateToReaderWasCalled);
+}
+- (void) test_WhenStartIsInvoked_ThenExecuteGetLastEntry {
+    SeamSearchEntity * _sut = [[SeamSearchEntity alloc] init];
+    [_sut start];
+    XCTAssertTrue(_sut.getLastEntryWasCalled);
+}
+- (void) test_WhenGetLastEntryIsCalled_InvokeGetLastEntryInteractor {
+    [_sut getLastEntry];
+    XCTAssertTrue(_fakeGetLastEntryInteractor.getLastEntryWasCalled);
+}
+- (void) test_GivenOnSuccessFromGetLastEntryInteractor_WhenGetLastEntryIsCalled_ThenInvokeHandleOnGetLastEntrySuccess {
+    SeamSearchEntity * _sut = [[SeamSearchEntity alloc] init];
+    _sut.getLastEntryInteractor = _fakeGetLastEntryInteractor;
+    
+    _fakeGetLastEntryInteractor.lastEntry = [[Lyrics alloc] init];
+    [_sut getLastEntry];
+    
+    XCTAssertTrue(_sut.handleOnGetLastEntrySuccessWasCalled);
+}
+- (void) test_GivenOnErrorFromGetLastEntryInteractor_WhenGetLastEntryIsCalled_ThenInvokeHandleOnGetLastEntryError {
+    SeamSearchEntity * _sut = [[SeamSearchEntity alloc] init];
+    _sut.getLastEntryInteractor = _fakeGetLastEntryInteractor;
+    
+    [_sut getLastEntry];
+    
+    XCTAssertTrue(_sut.handleOnGetLastEntryErrorWasCalled);
+}
+- (void) test_WhenHandleOnGetLastEntryErrorIsCalled_DoNothing {
+    LastEntryGetableError error = LastEntryGetableErrorNoEntries;
+    [_sut handleOnGetLastEntryError:error];
+}
+- (void) test_WhenHandleOnGetLastEntrySuccessIsCalled_ThenInvokeShowLastEntryOnController {
+    Lyrics * lyrics = [[Lyrics alloc] init];
+    [_sut handleOnGetLastEntrySuccess:lyrics];
+    XCTAssertTrue(_fakeController.showLastEntryWasCalled);
+}
+- (void) test_WhenHandleOnGetLastEntrySuccessIsCalled_ThenSetLastEntry {
+    Lyrics * lyrics = [[Lyrics alloc] init];
+    [_sut handleOnGetLastEntrySuccess:lyrics];
+    XCTAssertNotNil(_sut.lastEntry);
+}
+- (void) test_WhenOnLastEntryPressed_InvokeNavigateToReaderOnController {
+    
 }
 @end

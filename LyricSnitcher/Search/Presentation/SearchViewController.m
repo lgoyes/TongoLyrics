@@ -31,6 +31,11 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [_entity start];
+}
+
 - (IBAction)onGetLyricsButtonPressed:(UIButton *)sender {
     [_entity onSearchButtonPressed];
 }
@@ -83,5 +88,7 @@
     ReaderViewController * viewController = [ReaderViewController getInstanceWith:lyrics];
     [self presentViewController:viewController animated:true completion:nil];
 }
-
+- (void)showLastEntry:(Lyrics *)lyrics {
+    
+}
 @end

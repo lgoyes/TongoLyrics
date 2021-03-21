@@ -7,6 +7,7 @@
 
 #import "SearchEntity.h"
 #import "GetLyricsInteractor.h"
+#import "GetLastEntryInteractor.h"
 
 @implementation SearchEntity
 - (instancetype)init
@@ -14,9 +15,31 @@
     self = [super init];
     if (self) {
         _getLyricsInteractor = [[GetLyricsInteractor alloc] init];
+        _getLastEntryInteractor = [[GetLastEntryInteractor alloc] init];
     }
     return self;
 }
+- (void)start {
+    [self getLastEntry];
+}
+- (void)getLastEntry {
+    SearchEntity * __weak weakSelf = self;
+    [_getLastEntryInteractor getLastEntry:^(Lyrics *entry) {
+        [weakSelf handleOnGetLastEntrySuccess:entry];
+    } onError:^(LastEntryGetableError error) {
+        [weakSelf handleOnGetLastEntryError:error];
+    }];
+}
+
+- (void)handleOnGetLastEntrySuccess:(Lyrics *)lyrics {
+    _lastEntry = lyrics;
+    [_controller showLastEntry:lyrics];
+}
+
+- (void)handleOnGetLastEntryError:(LastEntryGetableError)error {
+    NSLog(@"There are not entries in the history");
+}
+
 - (BOOL)validateSongField {
     NSString * song = [_controller getSong];
     return (song != nil) && ![song isEqualToString:@""];
@@ -62,10 +85,10 @@
     NSString * artist = [_controller getArtist];
     SearchEntity * __weak weakSelf = self;
     [_getLyricsInteractor getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
-            [weakSelf handleLyricsSearchError:error];
-        } onSuccess:^(Lyrics *response) {
-            [weakSelf handleLyricsSearchSuccess:response];
-        }];
+        [weakSelf handleLyricsSearchError:error];
+    } onSuccess:^(Lyrics *response) {
+        [weakSelf handleLyricsSearchSuccess:response];
+    }];
 }
 - (void)handleLyricsSearchError: (LyricsGetableError) error {
     [self stopLoadingUI];
@@ -86,5 +109,8 @@
         case LyricsGetableErrorUnableToStoreInDB:
             return @"There is an error with the history. Please re-install the app.";
     }
+}
+- (void)onLastEntryPressed {
+    [_controller navigateToReader:_lastEntry];
 }
 @end
