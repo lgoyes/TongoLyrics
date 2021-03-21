@@ -83,6 +83,7 @@
 		0C0E7ABF2607AE7600894FAC /* GetLastEntryInteractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetLastEntryInteractor.h; sourceTree = "<group>"; };
 		0C0E7AC02607AE7600894FAC /* GetLastEntryInteractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetLastEntryInteractor.m; sourceTree = "<group>"; };
 		0C0E7AC52607B00100894FAC /* GetLastEntryInteractorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetLastEntryInteractorTests.m; sourceTree = "<group>"; };
+		0C4773BC2607C98A00DA489B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0C4B533726050E2100777111 /* LyricsGetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsGetable.h; sourceTree = "<group>"; };
 		0C54129E26069D5D0048C3C6 /* HistoryEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryEntity.h; sourceTree = "<group>"; };
 		0C54129F26069D5D0048C3C6 /* HistoryEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryEntity.m; sourceTree = "<group>"; };
@@ -187,6 +188,7 @@
 				0C8255EB2604054400FC742D /* LaunchScreen.storyboard */,
 				0C8255EF2604054400FC742D /* main.m */,
 				0C8255E62604054400FC742D /* LyricSnitcher.xcdatamodeld */,
+				0C4773BC2607C98A00DA489B /* README.md */,
 			);
 			path = LyricSnitcher;
 			sourceTree = "<group>";
