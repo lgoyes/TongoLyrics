@@ -55,12 +55,14 @@
 
 - (void)setLoadingState {
     [_getLyricsButton setTitle:@"" forState:UIControlStateNormal];
+    [_getLyricsButton setEnabled:false];
     [_loadingLyricsActivityIndicator setHidden:false];
 }
 
 
 - (void)setSteadyState {
     [_getLyricsButton setTitle:@"Get Lyrics" forState:UIControlStateNormal];
+    [_getLyricsButton setEnabled:true];
     [_loadingLyricsActivityIndicator setHidden:true];
 }
 
