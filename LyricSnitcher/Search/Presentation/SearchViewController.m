@@ -52,13 +52,11 @@
     _songTextField.backgroundColor = UIColor.systemBackgroundColor;
 }
 
-
 - (void)setLoadingState {
     [_getLyricsButton setTitle:@"" forState:UIControlStateNormal];
     [_getLyricsButton setEnabled:false];
     [_loadingLyricsActivityIndicator setHidden:false];
 }
-
 
 - (void)setSteadyState {
     [_getLyricsButton setTitle:@"Get Lyrics" forState:UIControlStateNormal];
@@ -66,11 +64,9 @@
     [_loadingLyricsActivityIndicator setHidden:true];
 }
 
-
 - (void)showArtistError {
     _artistTextField.backgroundColor = UIColor.systemRedColor;
 }
-
 
 - (void)showSongError {
     _songTextField.backgroundColor = UIColor.systemRedColor;
