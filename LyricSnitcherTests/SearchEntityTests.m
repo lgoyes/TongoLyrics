@@ -339,6 +339,12 @@
     [_sut handleLyricsSearchSuccess:response];
     XCTAssertTrue(_sut.stopLoadingUIWasCalled);
 }
+- (void) test_WhenHandleSearchLyricsSuccess_ThenInvokeGetLastEntry {
+    SeamSearchEntity * _sut = [[SeamSearchEntity alloc] init];
+    Lyrics * response = [[Lyrics alloc]init];
+    [_sut handleLyricsSearchSuccess:response];
+    XCTAssertTrue(_sut.getLastEntryWasCalled);
+}
 - (void) test_WhenHandleSearchLyricsError_ThenInvokeShowErrorOnController {
     [_sut handleLyricsSearchError:LyricsGetableErrorUnknown];
     XCTAssertTrue(_fakeController.showErrorWasCalled);
