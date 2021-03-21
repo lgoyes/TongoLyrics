@@ -37,6 +37,9 @@
     [super viewDidLoad];
     UIGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onPreviousContainerPressed:)];
     [_previousSearchStackContainer addGestureRecognizer:tapGesture];
+    
+    UITapGestureRecognizer *dismissTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:dismissTapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -102,5 +105,12 @@
 }
 - (void) onPreviousContainerPressed: (UIStackView *) sender {
     [_entity onLastEntryPressed];
+}
+- (void) dismissKeyboard {
+    if ([_songTextField isFirstResponder]) {
+        [_songTextField resignFirstResponder];
+    } else if ([_artistTextField isFirstResponder]) {
+        [_artistTextField resignFirstResponder];
+    }
 }
 @end

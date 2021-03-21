@@ -355,7 +355,7 @@
 }
 - (void) test_GivenUnknownError_WhenGetErrorMessageForErrorIsInvoked_ThenReturnAString {
     NSString * errorMessage = [_sut getErrorMessageFor: LyricsGetableErrorUnknown];
-    XCTAssertTrue([errorMessage isEqualToString:@"Unknown error."]);
+    XCTAssertTrue([errorMessage isEqualToString:@"Please check your network connection."]);
 }
 - (void) test_GivenDBError_WhenGetErrorMessageForErrorIsInvoked_ThenReturnAString {
     NSString * errorMessage = [_sut getErrorMessageFor: LyricsGetableErrorUnableToStoreInDB];

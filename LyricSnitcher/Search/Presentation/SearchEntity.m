@@ -106,7 +106,7 @@
         case LyricsGetableErrorNoResult:
             return @"No lyrics found.";
         case LyricsGetableErrorUnknown:
-            return @"Unknown error.";
+            return @"Please check your network connection.";
         case LyricsGetableErrorUnableToStoreInDB:
             return @"There is an error with the history. Please re-install the app.";
     }
