@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *getLyricsButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingLyricsActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIStackView *previousSearchStackContainer;
+@property (weak, nonatomic) IBOutlet UILabel *previousSongLabel;
+@property (weak, nonatomic) IBOutlet UILabel *previousArtistLabel;
 
 @property (strong, nonatomic) id<SearchEntityType> entity;
 @end
@@ -29,6 +31,10 @@
         [_entity setController:self];
     }
     return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -51,7 +57,6 @@
 - (void)hideArtistError {
     _artistTextField.backgroundColor = UIColor.systemBackgroundColor;
 }
-
 
 - (void)hideSongError {
     _songTextField.backgroundColor = UIColor.systemBackgroundColor;
@@ -89,6 +94,11 @@
     [self presentViewController:viewController animated:true completion:nil];
 }
 - (void)showLastEntry:(Lyrics *)lyrics {
-    
+    [_previousSongLabel setText:lyrics.song];
+    [_previousArtistLabel setText:lyrics.artist];
+    [_previousSearchStackContainer setHidden:false];
+}
+- (void) onPreviousContainerPressed: (UIStackView *) sender {
+    [_entity onLastEntryPressed];
 }
 @end

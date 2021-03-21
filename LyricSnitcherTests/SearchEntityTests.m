@@ -405,7 +405,8 @@
     [_sut handleOnGetLastEntrySuccess:lyrics];
     XCTAssertNotNil(_sut.lastEntry);
 }
-- (void) test_WhenOnLastEntryPressed_InvokeNavigateToReaderOnController {
-    
+- (void) test_WhenOnLastEntryPressedIsInvoked_InvokeNavigateToReaderOnController {
+    [_sut onLastEntryPressed];
+    XCTAssertTrue(_fakeController.navigateToReaderWasCalled);
 }
 @end
