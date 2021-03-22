@@ -97,7 +97,7 @@
 }
 - (void)handleLyricsSearchSuccess:(Lyrics *)response {
     [self stopLoadingUI];
-    [self getLastEntry];
+    [_controller showLastEntry:response];
     [_controller navigateToReader:response];
 }
 
