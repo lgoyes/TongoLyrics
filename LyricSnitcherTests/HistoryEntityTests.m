@@ -10,97 +10,22 @@
 #import "HistoryGetable.h"
 #import "HistoryPresentationContract.h"
 #import "GetHistoryInteractor.h"
-
-#pragma mark - SeamHistoryEntity
-
-@interface SeamHistoryEntity : HistoryEntity
-@property (nonatomic) BOOL getHistoryWasCalled;
-@property (nonatomic) BOOL startWasCalled;
-@property (nonatomic) BOOL handleHistoryErrorWasCalled;
-@property (nonatomic) BOOL handleHistorySuccessWasCalled;
-@property (nonatomic) BOOL startLoadingWasCalled;
-@end
-@implementation SeamHistoryEntity
--(void)start {
-    _startWasCalled = true;
-    [super start];
-}
-- (void)getHistory {
-    _getHistoryWasCalled = true;
-    [super getHistory];
-}
-- (void)startLoading {
-    _startLoadingWasCalled = true;
-    [super startLoading];
-}
-- (void)handleHistoryError:(HistoryGetableError)error {
-    _handleHistoryErrorWasCalled = true;
-    [super handleHistoryError:error];
-}
-- (void)handleHistorySuccess:(NSArray *)history {
-    _handleHistorySuccessWasCalled = true;
-    [super handleHistorySuccess:history];
-}
-@end
-
-#pragma mark - FakeGetHistoryInteractor
-
-@interface FakeGetHistoryInteractor : NSObject <HistoryGetable>
-@property (nonatomic) BOOL getHistoryWasCalled;
-@property (nonatomic) BOOL successIsExpected;
-@end
-@implementation FakeGetHistoryInteractor
-- (void)getHistory:(void (^)(HistoryGetableError))onError onSuccess:(void (^)(NSArray *))onSuccess {
-    _getHistoryWasCalled = true;
-    if (_successIsExpected) {
-        onSuccess(@[]);
-    } else {
-        onError(HistoryGetableErrorUnknown);
-    }
-}
-@end
-
-#pragma mark - FakeHistoryController
-
-@interface FakeHistoryController : NSObject <HistoryControllerType>
-@property (nonatomic) BOOL showErrorWasCalled;
-@property (nonatomic) BOOL showHistoryWasCalled;
-@property (nonatomic) BOOL setEmptyStateWasCalled;
-@property (nonatomic) BOOL setLoadingStateWasCalled;
-@property (nonatomic) BOOL launchReaderWithLyricsWasCalled;
-@end
-@implementation FakeHistoryController
-- (void)showError:(NSString *)message {
-    _showErrorWasCalled = true;
-}
-- (void)showHistory:(NSArray *)history {
-    _showHistoryWasCalled = true;
-}
-- (void)setEmptyState {
-    _setEmptyStateWasCalled = true;
-}
-- (void)setLoadingState {
-    _setLoadingStateWasCalled = true;
-}
-- (void)launchReaderWithLyrics:(Lyrics *)lyrics {
-    _launchReaderWithLyricsWasCalled = true;
-}
-@end
+#import <OCMock/OCMock.h>
 
 #pragma mark - HistoryEntityTests
 
 @interface HistoryEntityTests : XCTestCase
 @property (strong, nonatomic) HistoryEntity* sut;
-@property (strong, nonatomic) FakeGetHistoryInteractor* fakeInteractor;
-@property (strong, nonatomic) FakeHistoryController* fakeController;
+@property (strong, nonatomic) id fakeInteractor;
+@property (strong, nonatomic) id fakeController;
 @end
 
 @implementation HistoryEntityTests
 - (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
     [super setUpWithError:error];
     _sut = [[HistoryEntity alloc] init];
-    _fakeInteractor = [[FakeGetHistoryInteractor alloc] init];
-    _fakeController = [[FakeHistoryController alloc] init];
+    _fakeInteractor = OCMProtocolMock(@protocol(HistoryGetable));
+    _fakeController = OCMProtocolMock(@protocol(HistoryControllerType));
     
     _sut.getHistoryInteractor = _fakeInteractor;
     _sut.controller = _fakeController;
@@ -123,56 +48,70 @@
 }
 - (void) test_WhenSetControllerIsInvoked_ThenSetController {
     _sut = [[HistoryEntity alloc] init];
-    FakeHistoryController * controller = [[FakeHistoryController alloc] init];
+    id controller = OCMProtocolMock(@protocol(HistoryControllerType));
     [_sut setController:controller];
     XCTAssertTrue(_sut.controller == controller);
 }
 - (void) test_WhenStartIsInvoked_ThenExecuteStartLoading {
-    SeamHistoryEntity * _sut = [[SeamHistoryEntity alloc] init];
+    id testingSut = OCMPartialMock(_sut);
     [_sut start];
-    XCTAssertTrue(_sut.startLoadingWasCalled);
+    OCMVerify([testingSut startLoading]);
 }
 - (void) test_WhenStartIsInvoked_ThenExecuteGetHistory {
-    SeamHistoryEntity * _sut = [[SeamHistoryEntity alloc] init];
+    id testingSut = OCMPartialMock(_sut);
     [_sut start];
-    XCTAssertTrue(_sut.getHistoryWasCalled);
+    OCMVerify([testingSut getHistory]);
 }
 - (void) test_GivenBadResponseFromInteractor_WhenGetHistoryIsCalled_ThenInvokeHandleHistoryError {
-    SeamHistoryEntity * _sut = [[SeamHistoryEntity alloc] init];
-    _sut.getHistoryInteractor = _fakeInteractor;
-    _fakeInteractor.successIsExpected = false;
+    id testingSut = OCMPartialMock(_sut);
+
+    [[[_fakeInteractor stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^ErrorHandler)(HistoryGetableError);
+        ErrorHandler onError;
+        [invocation getArgument:&onError atIndex:2];
+        onError(HistoryGetableErrorUnknown);
+    }] getHistory:OCMOCK_ANY onSuccess:OCMOCK_ANY];
+    
     [_sut getHistory];
-    XCTAssertTrue(_sut.handleHistoryErrorWasCalled);
+    
+    OCMVerify([testingSut handleHistoryError:HistoryGetableErrorUnknown]);
 }
 - (void) test_GivenSuccessResponseFromInteractor_WhenGetHistoryIsCalled_ThenInvokeHandleHistorySuccess {
-    SeamHistoryEntity * _sut = [[SeamHistoryEntity alloc] init];
-    _sut.getHistoryInteractor = _fakeInteractor;
-    _fakeInteractor.successIsExpected = true;
+    id testingSut = OCMPartialMock(_sut);
+    
+    [[[_fakeInteractor stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(NSArray*);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:3];
+        onSuccess(@[]);
+    }] getHistory:OCMOCK_ANY onSuccess:OCMOCK_ANY];
+    
     [_sut getHistory];
-    XCTAssertTrue(_sut.handleHistorySuccessWasCalled);
+    
+    OCMVerify([testingSut handleHistorySuccess:OCMOCK_ANY]);
 }
 - (void) test_WhenHandleHistoryErrorIsInvoked_ThenCallShowErrorMessageOnController {
     HistoryGetableError error = HistoryGetableErrorUnknown;
     [_sut handleHistoryError:error];
-    XCTAssertTrue(_fakeController.showErrorWasCalled);
+    OCMVerify([_fakeController showError:OCMOCK_ANY]);
 }
 - (void) test_GivenAtLeastOneEntryInTheHistory_WhenHandleHistorySuccessIsInvoked_ThenCallShowHistoryOnController {
     NSArray * history = @[[[NSObject alloc] init]];
     [_sut handleHistorySuccess:history];
-    XCTAssertTrue(_fakeController.showHistoryWasCalled);
+    OCMVerify([_fakeController showHistory:OCMOCK_ANY]);
 }
 - (void) test_GivenNoEntriesInTheHistory_WhenHandleHistorySuccessIsInvoked_ThenCallSetEmptyStateOnController {
     NSArray * history = @[];
     [_sut handleHistorySuccess:history];
-    XCTAssertTrue(_fakeController.setEmptyStateWasCalled);
+    OCMVerify([_fakeController setEmptyState]);
 }
 - (void) test_WhenStartLoadingIsInvoked_ThenCallSetLoadingStateOnController {
     [_sut startLoading];
-    XCTAssertTrue(_fakeController.setLoadingStateWasCalled);
+    OCMVerify([_fakeController setLoadingState]);
 }
 - (void) test_WhenOnItemSelected_ThenInvokeLaunchReaderWithLyricsOnController {
     int selectedItemIndex = 0;
     [_sut onItemSelected: selectedItemIndex];
-    XCTAssertTrue(_fakeController.launchReaderWithLyricsWasCalled);
+    OCMVerify([_fakeController launchReaderWithLyrics:OCMOCK_ANY]);
 }
 @end

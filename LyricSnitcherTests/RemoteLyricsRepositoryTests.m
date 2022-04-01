@@ -8,23 +8,26 @@
 #import <XCTest/XCTest.h>
 #import "RemoteLyricsRepository.h"
 #import "APILyrics.h"
+#import <OCMock/OCMock.h>
 
 @interface RemoteLyricsRepositoryTests : XCTestCase
 @property (strong, nonatomic) RemoteLyricsRepository* sut;
+@property (strong, nonatomic) id webClient;
 @end
 
 @implementation RemoteLyricsRepositoryTests
 
-- (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [super setUpWithError:error];
+- (void)setUp {
+    [super setUp];
     _sut = [[RemoteLyricsRepository alloc] init];
-    return true;
+    self.webClient = OCMProtocolMock(@protocol(WebClient));
+    self.sut.webClient = self.webClient;
 }
 
--(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+- (void)tearDown {
     _sut = nil;
-    [super tearDownWithError:error];
-    return true;
+    self.webClient = nil;
+    [super tearDown];
 }
 -(void) test_WhenFormatStringURLForArtistAndSongIsCalled_ThenReturnFormattedString {
     NSString * artist = @"dummy-artist";
@@ -49,52 +52,59 @@
     NSString * expectedURLString = [NSString stringWithFormat:@"https://api.lyrics.ovh/v1/%@/%@", artist, expectedFormattedSong];
     XCTAssertTrue([urlString isEqualToString:expectedURLString]);
 }
--(void) test_WhenGetURLForArtistAndSongIsCalled_ThenReturnURL {
-    NSString * artist = @"dummy-artist";
-    NSString * song = @"dummy-song";
-    NSURL * url = [_sut getURLForArtist: artist andSong: song];
-    XCTAssertNotNil(url);
-}
 
-// This test might take too long to run. Disable it during TDD
 - (void) test_GivenValidArtistAndSong_WhenPrivateFetchLyricsForArtistAndSongIsCalled_ThenCallOnSuccessBlock {
+    [[[self.webClient stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(NSDictionary *);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:3];
+        onSuccess(@{@"lyrics": @"any-lyrics"});
+    }] performRequestWithEndpoint:OCMOCK_ANY onSuccess:OCMOCK_ANY onError:OCMOCK_ANY];
+    
     NSString * artist = @"Coldplay";
     NSString * song = @"Adventure of a Lifetime";
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess was called"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError should not be called"];
     failureExpectation.inverted = true;
     
-    [_sut _fetchLyricsForArtist: artist
+    [_sut fetchLyricsForArtist: artist
                        andSong: song
                        onError: ^(NSError * error) {
         [failureExpectation fulfill];
     }
-                     onSuccess: ^(APILyrics* response) {
+                     onSuccess: ^(Lyrics* response) {
         [correctExpectation fulfill];
     }];
     
-    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:20];
+    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
 }
 
-// This test might take too long to run. Disable it during TDD
 - (void) test_GivenNOTValidArtistAndValidSong_WhenPrivateFetchLyricsForArtistAndSongIsCalled_ThenCallOnErrorBlock {
+    [[[self.webClient stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^ErrorHandler)(NSError *);
+        ErrorHandler onError;
+        [invocation getArgument:&onError atIndex:4];
+        NSError * error = [NSError errorWithDomain:NSURLErrorDomain code:1 userInfo:@{NSLocalizedDescriptionKey: @"The request timed out."}];
+        onError(error);
+    }] performRequestWithEndpoint:OCMOCK_ANY onSuccess:OCMOCK_ANY onError:OCMOCK_ANY];
+    
     NSString * artist = @"asdfasdf";
     NSString * song = @"Adventure of a Lifetime";
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError was called"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess should not be called"];
     failureExpectation.inverted = true;
-    
-    [_sut _fetchLyricsForArtist: artist
+
+    [_sut fetchLyricsForArtist: artist
                        andSong: song
                        onError: ^(NSError * error) {
         XCTAssertTrue([[error localizedDescription]isEqualToString:@"The request timed out."]);
         [correctExpectation fulfill];
     }
-                     onSuccess: ^(APILyrics* response) {
+                     onSuccess: ^(Lyrics* response) {
         [failureExpectation fulfill];
     }];
     
-    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:20];
+    [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
 }
 -(void) test_WhenMapAPIResponseIsCalled_ThenMapProperties {
     NSString * artist = @"dummy-artist";

@@ -21,7 +21,7 @@
     GetLyricsInteractor * __weak weakSelf = self;
     [_networkRepository fetchLyricsForArtist:artist andSong:song onError:^(NSError *error) {
         if (onError != nil) {
-            if (error != nil && error.localizedDescription != nil && [error.localizedDescription isEqualToString:@"The request timed out."]) {
+            if (error != nil && error.localizedDescription != nil && ([error.localizedDescription isEqualToString:@"The request timed out."] || [error.localizedDescription isEqualToString:@"No lyrics found."])) {
                 onError(LyricsGetableErrorNoResult);
             } else {
                 onError(LyricsGetableErrorUnknown);

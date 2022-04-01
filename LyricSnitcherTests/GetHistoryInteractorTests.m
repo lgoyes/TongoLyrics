@@ -10,67 +10,20 @@
 #import "LocalStorageRepository.h"
 #import "DBLocalStorageRepository.h"
 #import "SimplifiedLocalStorageRepository.h"
-
-#pragma mark - FakeLocalStorageRepository
-
-@interface FakeLocalStorageRepository : NSObject <LocalStorageRepositoryType>
-@property (strong, nonatomic) NSMutableArray * entries;
-@property (nonatomic) BOOL listShouldSucceed;
-@end
-
-@implementation FakeLocalStorageRepository
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _entries = [@[] mutableCopy];
-        _listShouldSucceed = false;
-    }
-    return self;
-}
-
-- (void)create:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-- (void)deleteBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-- (void)list:(void (^)(NSArray *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    if (_listShouldSucceed) {
-        onSuccess([_entries copy]);
-    } else {
-        onError(LocalStorageRepositoryErrorList);
-    }
-}
-
-- (void)readBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-- (void)updateBySong:(NSString *)song andArtist:(NSString *)artist item:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-- (void)getLastRecord:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-@end
+#import <OCMock/OCMock.h>
 
 #pragma mark - GetHistoryInteractorTests
 
 @interface GetHistoryInteractorTests : XCTestCase
 @property (strong, nonatomic) GetHistoryInteractor* sut;
-@property (strong, nonatomic) FakeLocalStorageRepository* localStorageRepository;
+@property (strong, nonatomic) id localStorageRepository;
 @end
 
 @implementation GetHistoryInteractorTests
 - (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
     [super setUpWithError:error];
     _sut = [[GetHistoryInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];
-    _localStorageRepository = [[FakeLocalStorageRepository alloc] init];
+    _localStorageRepository = OCMProtocolMock(@protocol(LocalStorageRepositoryType));
     _sut.localStorageRepository = _localStorageRepository;
     return true;
 }
@@ -93,8 +46,13 @@
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError should not be called"];
     failureExpectation.inverted = true;
     
-    _localStorageRepository.listShouldSucceed = true;
-    
+    [[[_localStorageRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(NSArray *);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:2];
+        onSuccess(@[]);
+    }] list:OCMOCK_ANY onError:OCMOCK_ANY];
+        
     [_sut getHistory:^(HistoryGetableError error) {
         [failureExpectation fulfill];
     } onSuccess:^(NSArray *history) {
@@ -109,8 +67,12 @@
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError should not be called"];
     failureExpectation.inverted = true;
     
-    _localStorageRepository.listShouldSucceed = true;
-    [_localStorageRepository.entries addObject:[[Lyrics alloc] init]];
+    [[[_localStorageRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(NSArray *);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:2];
+        onSuccess(@[ [Lyrics new] ]);
+    }] list:OCMOCK_ANY onError:OCMOCK_ANY];
     
     [_sut getHistory:^(HistoryGetableError error) {
         [failureExpectation fulfill];
@@ -126,8 +88,12 @@
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess should not be called"];
     failureExpectation.inverted = true;
     
-    _localStorageRepository.listShouldSucceed = false;
-    [_localStorageRepository.entries addObject:[[Lyrics alloc] init]];
+    [[[_localStorageRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^ErrorHandler)(LocalStorageRepositoryError);
+        ErrorHandler onError;
+        [invocation getArgument:&onError atIndex:3];
+        onError(LocalStorageRepositoryErrorNoEntries);
+    }] list:OCMOCK_ANY onError:OCMOCK_ANY];
     
     [_sut getHistory:^(HistoryGetableError error) {
         XCTAssertEqual(error, HistoryGetableErrorUnknown);

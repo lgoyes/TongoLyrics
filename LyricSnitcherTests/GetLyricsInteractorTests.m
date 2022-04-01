@@ -13,98 +13,22 @@
 #import "LocalStorageRepository.h"
 #import "DBLocalStorageRepository.h"
 #import "SimplifiedLocalStorageRepository.h"
-
-#pragma mark - FakeNetworkRepository
-
-@interface FakeLocalStorageRepositoryForGetLyricsInteractor : NSObject <LocalStorageRepositoryType>
-@property (strong, nonatomic) NSMutableArray * entries;
-@property (nonatomic) BOOL createShouldSucceed;
-@end
-
-@implementation FakeLocalStorageRepositoryForGetLyricsInteractor
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _entries = [@[] mutableCopy];
-        _createShouldSucceed = false;
-    }
-    return self;
-}
-
-- (void)create:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    if (_createShouldSucceed) {
-        [_entries addObject:item];
-        onSuccess();
-    } else {
-        onError(LocalStorageRepositoryErrorCreate);
-    }
-}
-
-- (void)deleteBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-- (void)list:(void (^)(NSArray *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-- (void)readBySong:(NSString *)song andArtist:(NSString *)artist onSuccess:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-- (void)updateBySong:(NSString *)song andArtist:(NSString *)artist item:(Lyrics *)item onSuccess:(void (^)(void))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-- (void)getLastRecord:(void (^)(Lyrics *))onSuccess onError:(void (^)(LocalStorageRepositoryError))onError {
-    [NSException raise:@"Invalid method call" format:@"This method should not be called"];
-}
-
-@end
-
-#pragma mark - FakeNetworkRepository
-
-@interface FakeNetworkRepository : NSObject <LyricsRepositoryProtocol>
-@property (nonatomic) bool fetchLyricsForArtistWasCalled;
-@property (nonatomic) bool fetchLyricsForArtistExpectedResultSuccess;
-@end
-@implementation FakeNetworkRepository
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _fetchLyricsForArtistWasCalled = false;
-        _fetchLyricsForArtistExpectedResultSuccess = false;
-    }
-    return self;
-}
-- (void)fetchLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError *))onError onSuccess:(void (^)(Lyrics *))onSuccess {
-    _fetchLyricsForArtistWasCalled = true;
-    if (_fetchLyricsForArtistExpectedResultSuccess && onSuccess != nil) {
-        Lyrics * dummyLyrics = [[Lyrics alloc] init];
-        onSuccess(dummyLyrics);
-    } else if (!_fetchLyricsForArtistExpectedResultSuccess && onError != nil) {
-        NSError * error = [NSError errorWithDomain:NSURLErrorDomain code:-1001 userInfo:@{ @"NSLocalizedDescription": @"The request timed out."}];
-        onError(error);
-    }
-}
-@end
+#import <OCMock/OCMock.h>
 
 #pragma mark - GetLyricsInteractorTests
 
 @interface GetLyricsInteractorTests : XCTestCase
 @property (strong, nonatomic) GetLyricsInteractor* sut;
-@property (strong, nonatomic) FakeNetworkRepository* networkRepository;
-@property (strong, nonatomic) FakeLocalStorageRepositoryForGetLyricsInteractor* localStorageRepository;
+@property (strong, nonatomic) id networkRepository;
+@property (strong, nonatomic) id localStorageRepository;
 @end
 
 @implementation GetLyricsInteractorTests
 - (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
     [super setUpWithError:error];
     _sut = [[GetLyricsInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];
-    _networkRepository = [[FakeNetworkRepository alloc] init];
-    _localStorageRepository = [[FakeLocalStorageRepositoryForGetLyricsInteractor alloc] init];
+    _networkRepository = OCMProtocolMock(@protocol(LyricsRepositoryProtocol));
+    _localStorageRepository = OCMProtocolMock(@protocol(LocalStorageRepositoryType));
     _sut.networkRepository = _networkRepository;
     _sut.localStorageRepository = _localStorageRepository;
     return true;
@@ -134,23 +58,41 @@
     XCTAssertTrue([_sut.localStorageRepository isKindOfClass: DBLocalStorageRepository.class]);
 }
 - (void) test_GivenValidArguments_WhenGetLyricsForArtistAndSong_ThenInvokeFetchLyricsForArtistInRepository {
+    
+    [[[_networkRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^ErrorHandler)(NSError *);
+        ErrorHandler onError;
+        [invocation getArgument:&onError atIndex:4];
+        NSError * error = [NSError errorWithDomain:NSCocoaErrorDomain code:1 userInfo:@{NSLocalizedDescriptionKey: @"The request timed out."}];
+        onError(error);
+    }] fetchLyricsForArtist:OCMOCK_ANY andSong:OCMOCK_ANY onError:OCMOCK_ANY onSuccess:OCMOCK_ANY];
+    
+    XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"Any callback is correct"];
     NSString * artist = @"dummy-artist";
     NSString * song = @"dummy-song";
-    XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"Any callback is correct"];
     GetLyricsInteractorTests * __weak weakSelf = self;
     [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
-        XCTAssertTrue(weakSelf.networkRepository.fetchLyricsForArtistWasCalled);
         [correctExpectation fulfill];
     } onSuccess:^(Lyrics * _Nonnull response) {
-        XCTAssertTrue(weakSelf.networkRepository.fetchLyricsForArtistWasCalled);
         [correctExpectation fulfill];
     }];
+    
     [self waitForExpectations:@[correctExpectation] timeout:0.1];
+    
+    OCMVerify([weakSelf.networkRepository fetchLyricsForArtist:OCMOCK_ANY andSong:OCMOCK_ANY onError:OCMOCK_ANY onSuccess:OCMOCK_ANY]);
 }
+
 - (void) test_GivenOnErrorResponseFromTheNetworkRepository_WhenGetLyricsForArtistAndSong_ThenCallOnErrorCallback {
     NSString * artist = @"dummy-artist";
     NSString * song = @"dummy-song";
-    _networkRepository.fetchLyricsForArtistExpectedResultSuccess = false;
+
+    [[[_networkRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^ErrorHandler)(NSError *);
+        ErrorHandler onError;
+        [invocation getArgument:&onError atIndex:4];
+        NSError * error = [NSError errorWithDomain:NSCocoaErrorDomain code:1 userInfo:@{NSLocalizedDescriptionKey: @"The request timed out."}];
+        onError(error);
+    }] fetchLyricsForArtist:OCMOCK_ANY andSong:OCMOCK_ANY onError:OCMOCK_ANY onSuccess:OCMOCK_ANY];
     
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is correct"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is not correct"];
@@ -166,8 +108,21 @@
 - (void) test_GivenOnSuccessResponseFromTheNetworkRepository_WhenGetLyricsForArtistAndSong_ThenCallOnSuccessCallback {
     NSString * artist = @"dummy-artist";
     NSString * song = @"dummy-song";
-    _networkRepository.fetchLyricsForArtistExpectedResultSuccess = true;
-    _localStorageRepository.createShouldSucceed = true;
+    [[[_localStorageRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(void);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:3];
+        onSuccess();
+    }] create:OCMOCK_ANY onSuccess:OCMOCK_ANY onError:OCMOCK_ANY];
+    
+    [[[_networkRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(Lyrics *);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:5];
+        Lyrics * lyrics = [Lyrics new];
+        onSuccess(lyrics);
+    }] fetchLyricsForArtist:OCMOCK_ANY andSong:OCMOCK_ANY onError:OCMOCK_ANY onSuccess:OCMOCK_ANY];
+    
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is correct"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is not correct"];
     failureExpectation.inverted = true;
@@ -179,29 +134,36 @@
     [self waitForExpectations:@[correctExpectation, failureExpectation] timeout:0.1];
 }
 - (void) test_GivenOnSuccessResponseFromTheNetworkRepository_WhenGetLyricsForArtistAndSong_ThenCallCreateEntryOnLocalStorageRepository {
-    NSString * artist = @"dummy-artist";
-    NSString * song = @"dummy-song";
 
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess is correct"];
     XCTestExpectation * failureExpectationNetworkError = [[XCTestExpectation alloc] initWithDescription:@"onError is not correct"];
     failureExpectationNetworkError.inverted = true;
     XCTestExpectation * failureExpectationDatabaseError = [[XCTestExpectation alloc] initWithDescription:@"LocalStorageRepository should've stored the new entry"];
     failureExpectationDatabaseError.inverted = true;
+
+    [[[_localStorageRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(void);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:3];
+        onSuccess();
+    }] create:OCMOCK_ANY onSuccess:OCMOCK_ANY onError:OCMOCK_ANY];
     
-    _networkRepository.fetchLyricsForArtistExpectedResultSuccess = true;
-    _localStorageRepository.createShouldSucceed = true;
+    [[[_networkRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(Lyrics *);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:5];
+        Lyrics * lyrics = [Lyrics new];
+        onSuccess(lyrics);
+    }] fetchLyricsForArtist:OCMOCK_ANY andSong:OCMOCK_ANY onError:OCMOCK_ANY onSuccess:OCMOCK_ANY];
     
-    GetLyricsInteractorTests * __weak weakSelf = self;
-    
+    NSString * artist = @"dummy-artist";
+    NSString * song = @"dummy-song";
     [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
         [failureExpectationNetworkError fulfill];
     } onSuccess:^(Lyrics * _Nonnull response) {
-        if (weakSelf.localStorageRepository.entries.count == 1) {
-            [correctExpectation fulfill];
-        } else {
-            [failureExpectationDatabaseError fulfill];
-        }
+        [correctExpectation fulfill];
     }];
+    
     [self waitForExpectations:@[correctExpectation, failureExpectationNetworkError, failureExpectationDatabaseError] timeout:0.1];
 }
 - (void) test_GivenOnSuccessResponseFromTheNetworkRepositoryAndErrorFromTheDatabase_WhenGetLyricsForArtistAndSong_ThenThrowError {
@@ -211,9 +173,21 @@
     XCTestExpectation * correctExpectation = [[XCTestExpectation alloc] initWithDescription:@"onError is expected"];
     XCTestExpectation * failureExpectation = [[XCTestExpectation alloc] initWithDescription:@"onSuccess should not be reached"];
     failureExpectation.inverted = true;
+        
+    [[[_localStorageRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^ErrorHandler)(NSError*);
+        ErrorHandler onError;
+        [invocation getArgument:&onError atIndex:4];
+        onError([NSError new]);
+    }] create:OCMOCK_ANY onSuccess:OCMOCK_ANY onError:OCMOCK_ANY];
     
-    _networkRepository.fetchLyricsForArtistExpectedResultSuccess = true;
-    _localStorageRepository.createShouldSucceed = false;
+    [[[_networkRepository stub] andDo:^(NSInvocation *invocation) {
+        typedef void (^SuccessHandler)(Lyrics *);
+        SuccessHandler onSuccess;
+        [invocation getArgument:&onSuccess atIndex:5];
+        Lyrics * lyrics = [Lyrics new];
+        onSuccess(lyrics);
+    }] fetchLyricsForArtist:OCMOCK_ANY andSong:OCMOCK_ANY onError:OCMOCK_ANY onSuccess:OCMOCK_ANY];
     
     [_sut getLyricsForArtist:artist andSong:song onError:^(LyricsGetableError error) {
         XCTAssertEqual(error, LyricsGetableErrorUnableToStoreInDB);

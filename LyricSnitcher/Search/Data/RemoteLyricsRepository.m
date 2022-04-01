@@ -6,6 +6,7 @@
 //
 
 #import "RemoteLyricsRepository.h"
+#import "RESTClient.h"
 
 @interface RemoteLyricsRepository()
 @property (strong, nonatomic) NSString * apiBaseURL;
@@ -16,6 +17,7 @@
     self = [super init];
     if (self) {
         _apiBaseURL = @"https://api.lyrics.ovh/v1";
+        _webClient = [RESTClient new];
     }
     return self;
 }
@@ -25,49 +27,27 @@
     NSString * fullEndpoint = [NSString stringWithFormat:@"%@/%@/%@", _apiBaseURL, formattedArtist, formattedSong];
     return fullEndpoint;
 }
-- (NSURL *)getURLForArtist:(NSString *)artist andSong:(NSString *)song {
-    NSString * fullEndpoint = [self formatStringURLForArtist:artist andSong:song];
-    NSURL * url = [NSURL URLWithString:fullEndpoint];
-    return url;
-}
-- (void)_fetchLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError * _Nonnull))onError onSuccess:(void (^)(APILyrics * _Nonnull))onSuccess {
-    NSURL * url = [self getURLForArtist:artist andSong:song];
-    NSURLSessionConfiguration * configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    configuration.timeoutIntervalForRequest = 10;
-    NSURLSession * session = [NSURLSession sessionWithConfiguration: configuration];
-    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error != nil && onError != nil) {
-                onError(error);
-                return;
-            }
-            
-            NSError * conversionError = nil;
-            NSDictionary * dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&conversionError];
-            if (conversionError != nil && onError != nil) {
-                onError(error);
-                return;
-            }
-            
-            NSString * lyrics = dataDictionary[@"lyrics"];
-            
-            APILyrics * parsedResponse = [[APILyrics alloc]initWithLyrics:lyrics];
-            if (onSuccess!= nil) {
-                onSuccess(parsedResponse);
-                return;
-            }
-        });
-    }];
-    [dataTask resume];
-}
 
 - (void)fetchLyricsForArtist:(NSString *)artist andSong:(NSString *)song onError:(void (^)(NSError *))onError onSuccess:(void (^)(Lyrics *))onSuccess {
-    [self _fetchLyricsForArtist:artist andSong:song onError:^(NSError * _Nonnull error) {
-        onError(error);
-    } onSuccess:^(APILyrics * _Nonnull response) {
+    NSString * fullEndpoint = [self formatStringURLForArtist:artist andSong:song];
+    Endpoint * endpoint = [Endpoint new];
+    endpoint.body = nil;
+    endpoint.url = fullEndpoint;
+    endpoint.httpMethod = @"GET";
+    [_webClient performRequestWithEndpoint:endpoint onSuccess:^(NSDictionary *response) {
+        if (response[@"error"]) {
+            NSError* error = [NSError errorWithDomain:NSURLErrorDomain code:1 userInfo:@{ NSLocalizedDescriptionKey: @"No lyrics found."}];
+            onError(error);
+            return;
+        }
+        
         NSDate * now = [NSDate now];
-        Lyrics * mappedResponse = [self mapAPIResponse:response withArtist:artist song:song andDate:now];
+        NSString * lyrics = response[@"lyrics"];
+        APILyrics * apiLyrics = [[APILyrics alloc]initWithLyrics:lyrics];
+        Lyrics * mappedResponse = [self mapAPIResponse:apiLyrics withArtist:artist song:song andDate:now];
         onSuccess(mappedResponse);
+    } onError:^(NSError *error) {
+        onError(error);
     }];
 }
 

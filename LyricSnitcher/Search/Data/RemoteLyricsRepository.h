@@ -8,13 +8,13 @@
 #import <Foundation/Foundation.h>
 #import "LyricsRepositoryProtocol.h"
 #import "APILyrics.h"
+#import "WebClient.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RemoteLyricsRepository : NSObject <LyricsRepositoryProtocol>
+@property (nonatomic, strong) id<WebClient> webClient;
 - (NSString*) formatStringURLForArtist: (NSString*) artist andSong:(NSString*) song;
-- (NSURL*) getURLForArtist: (NSString*) artist andSong:(NSString*) song;
-- (void) _fetchLyricsForArtist: (NSString*) artist andSong:(NSString*) song onError:(void (^) (NSError* error))onError onSuccess:(void (^) (APILyrics* response)) onSuccess;
 - (Lyrics*) mapAPIResponse: (APILyrics*) response withArtist:(NSString*) artist song: (NSString*) song andDate: (NSDate*) date;
 @end
 
