@@ -20,7 +20,7 @@
 - (void)setUp {
     [super setUp];
     _sut = [[RemoteLyricsRepository alloc] init];
-    self.webClient = OCMProtocolMock(@protocol(WebClient));
+    self.webClient = OCMClassMock([RESTClient class]);
     self.sut.webClient = self.webClient;
 }
 
