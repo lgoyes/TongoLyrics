@@ -15,16 +15,14 @@
 @end
 
 @implementation SimplifiedLocalStorageRepositoryTests
-- (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [super setUpWithError:error];
+- (void)setUp {
+    [super setUp];
     _sut = [[SimplifiedLocalStorageRepository alloc] init];
-    return true;
 }
 
--(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+-(void)tearDown {
     _sut = nil;
-    [super tearDownWithError:error];
-    return true;
+    [super tearDown];
 }
 - (void) test_WhenInit_SetOneDefaultEntryToDatabase {
     NSArray * entries = [_sut getEntries];

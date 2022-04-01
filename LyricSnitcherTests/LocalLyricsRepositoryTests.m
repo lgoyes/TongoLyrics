@@ -14,17 +14,17 @@
 @end
 
 @implementation LocalLyricsRepositoryTests
-- (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [super setUpWithError:error];
+
+- (void)setUp {
+    [super setUp];
     _sut = [[LocalLyricsRepository alloc] init];
-    return true;
 }
 
--(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+- (void)tearDown {
     _sut = nil;
-    [super tearDownWithError:error];
-    return true;
+    [super tearDown];
 }
+
 - (void) test_GivenValidArtistAndSong_WhenFetchLyricsForArtistAndSongIsCalled_ThenCallOnSuccessBlock {
     NSString * artist = @"Coldplay";
     NSString * song = @"Adventure of a Lifetime";

@@ -24,23 +24,23 @@
 @end
 
 @implementation GetLyricsInteractorTests
-- (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [super setUpWithError:error];
+
+- (void)setUp {
+    [super setUp];
     _sut = [[GetLyricsInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];
     _networkRepository = OCMProtocolMock(@protocol(LyricsRepositoryProtocol));
     _localStorageRepository = OCMProtocolMock(@protocol(LocalStorageRepositoryType));
     _sut.networkRepository = _networkRepository;
     _sut.localStorageRepository = _localStorageRepository;
-    return true;
 }
 
--(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+- (void)tearDown {
     _networkRepository = nil;
     _localStorageRepository = nil;
     _sut = nil;
-    [super tearDownWithError:error];
-    return true;
+    [super tearDown];
 }
+
 - (void) test_WhenInitWithSystemConfigDebug_InitNetworkRepositoryWithLocalVersion {
     _sut = [[GetLyricsInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];
     XCTAssertTrue([_sut.networkRepository isKindOfClass: LocalLyricsRepository.class]);

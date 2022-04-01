@@ -21,22 +21,20 @@
 @end
 
 @implementation HistoryEntityTests
-- (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [super setUpWithError:error];
+- (void)setUp {
+    [super setUp];
     _sut = [[HistoryEntity alloc] init];
     _fakeInteractor = OCMProtocolMock(@protocol(HistoryGetable));
     _fakeController = OCMProtocolMock(@protocol(HistoryControllerType));
     
     _sut.getHistoryInteractor = _fakeInteractor;
     _sut.controller = _fakeController;
-    return true;
 }
--(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+-(void)tearDown {
     _fakeInteractor = nil;
     _fakeController = nil;
     _sut = nil;
-    [super tearDownWithError:error];
-    return true;
+    [super tearDown];
 }
 - (void) test_WhenInit_ThenControllerShouldBeNil {
     _sut = [[HistoryEntity alloc] init];

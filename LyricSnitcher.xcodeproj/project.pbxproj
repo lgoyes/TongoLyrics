@@ -45,6 +45,7 @@
 		733982964C0453A3243F6018 /* Pods_LyricSnitcher_LyricSnitcherUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED07A8E31C3121E29FFF36 /* Pods_LyricSnitcher_LyricSnitcherUITests.framework */; };
 		79638EA127F793B8001520BF /* RESTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 79638EA027F793B8001520BF /* RESTClient.m */; };
 		79638EA427F7AFAB001520BF /* Endpoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 79638EA327F7AFAB001520BF /* Endpoint.m */; };
+		79638EA627F7B844001520BF /* DBLocalStorageRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79638EA527F7B844001520BF /* DBLocalStorageRepositoryTests.m */; };
 		D080DD774E0689B7D7A133C2 /* Pods_LyricSnitcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88C2EF9095C462127AA2261 /* Pods_LyricSnitcher.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,7 @@
 		79638EA027F793B8001520BF /* RESTClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RESTClient.m; sourceTree = "<group>"; };
 		79638EA227F7AFAB001520BF /* Endpoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Endpoint.h; sourceTree = "<group>"; };
 		79638EA327F7AFAB001520BF /* Endpoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Endpoint.m; sourceTree = "<group>"; };
+		79638EA527F7B844001520BF /* DBLocalStorageRepositoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBLocalStorageRepositoryTests.m; sourceTree = "<group>"; };
 		9D9127F67E8FA022F8F27C6C /* Pods-LyricSnitcher-LyricSnitcherUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyricSnitcher-LyricSnitcherUITests.debug.xcconfig"; path = "Target Support Files/Pods-LyricSnitcher-LyricSnitcherUITests/Pods-LyricSnitcher-LyricSnitcherUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A88C2EF9095C462127AA2261 /* Pods_LyricSnitcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LyricSnitcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE326BC2B7262B3C95E6BF81 /* Pods-LyricSnitcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyricSnitcher.release.xcconfig"; path = "Target Support Files/Pods-LyricSnitcher/Pods-LyricSnitcher.release.xcconfig"; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				0C0B045B2606801A00C0A9D0 /* GetHistoryInteractorTests.m */,
 				0C5412A526069D850048C3C6 /* HistoryEntityTests.m */,
 				0C0E7AC52607B00100894FAC /* GetLastEntryInteractorTests.m */,
+				79638EA527F7B844001520BF /* DBLocalStorageRepositoryTests.m */,
 			);
 			path = LyricSnitcherTests;
 			sourceTree = "<group>";
@@ -697,6 +700,7 @@
 				0C0E7AC62607B00100894FAC /* GetLastEntryInteractorTests.m in Sources */,
 				0C0747002604DF8400B7B985 /* LocalLyricsRepositoryTests.m in Sources */,
 				0C0B045C2606801A00C0A9D0 /* GetHistoryInteractorTests.m in Sources */,
+				79638EA627F7B844001520BF /* DBLocalStorageRepositoryTests.m in Sources */,
 				0C7D3F082604EBB60097701A /* GetLyricsInteractorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -20,18 +20,16 @@
 @end
 
 @implementation GetHistoryInteractorTests
-- (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [super setUpWithError:error];
+- (void)setUp {
+    [super setUp];
     _sut = [[GetHistoryInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];
     _localStorageRepository = OCMProtocolMock(@protocol(LocalStorageRepositoryType));
     _sut.localStorageRepository = _localStorageRepository;
-    return true;
 }
 
--(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+-(void)tearDown {
     _sut = nil;
-    [super tearDownWithError:error];
-    return true;
+    [super tearDown];
 }
 - (void) test_WhenInitWithSystemConfigDebug_InitRepositoryWithLocalVersion {
     _sut = [[GetHistoryInteractor alloc] initWithSystemConfig:SystemConfigTypeDebug];

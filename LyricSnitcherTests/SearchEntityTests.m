@@ -21,8 +21,8 @@
 @end
 
 @implementation SearchEntityTests
-- (BOOL)setUpWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [super setUpWithError:error];
+- (void)setUp {
+    [super setUp];
     _sut = [[SearchEntity alloc] init];
     _fakeGetLyricsInteractor = OCMProtocolMock(@protocol(LyricsGetable));
     _fakeController = OCMProtocolMock(@protocol(SearchControllerType));
@@ -31,16 +31,14 @@
     _sut.getLyricsInteractor = _fakeGetLyricsInteractor;
     _sut.getLastEntryInteractor = _fakeGetLastEntryInteractor;
     _sut.controller = _fakeController;
-    return true;
 }
 
--(BOOL)tearDownWithError:(NSError *__autoreleasing  _Nullable *)error {
+-(void)tearDown {
     _fakeGetLastEntryInteractor = nil;
     _fakeGetLyricsInteractor = nil;
     _fakeController = nil;
     _sut = nil;
-    [super tearDownWithError:error];
-    return true;
+    [super tearDown];
 }
 - (void) test_WhenInit_ThenCreateAnInstanceOfTheFetchInteractor {
     _sut = [[SearchEntity alloc] init];
